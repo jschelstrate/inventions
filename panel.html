@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel — The Verified Exchange</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0c1220;
+    --ink-soft: #1e293b;
+    --slate: #475569;
+    --mist: #94a3b8;
+    --cloud: #e2e8f0;
+    --snow: #f8fafc;
+    --white: #ffffff;
+    --blue: #2563eb;
+    --blue-glow: #3b82f6;
+    --blue-pale: #dbeafe;
+    --blue-deep: #1d4ed8;
+    --green: #059669;
+    --green-pale: #d1fae5;
+    --green-dark: #065f46;
+    --red: #dc2626;
+    --red-pale: #fee2e2;
+    --amber: #d97706;
+    --amber-pale: #fef3c7;
+    --stripe: #635bff;
+    --gradient-hero: linear-gradient(135deg, #0c1220 0%, #1e3a5f 50%, #0c1220 100%);
+    --radius: 16px;
+    --radius-sm: 10px;
+    --shadow-card: 0 1px 3px rgba(0,0,0,0.04), 0 8px 30px rgba(0,0,0,0.06);
+    --shadow-elevated: 0 4px 12px rgba(0,0,0,0.08), 0 20px 60px rgba(0,0,0,0.1);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Outfit', sans-serif; font-weight: 400; line-height: 1.7;
+    color: var(--ink-soft); background: var(--snow);
+    -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* ─── HERO ─── */
+  .hero { background: var(--gradient-hero); color: var(--white); padding: 100px 40px 80px; text-align: center; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 600px 400px at 20% 50%, rgba(37,99,235,0.15), transparent), radial-gradient(ellipse 500px 500px at 80% 30%, rgba(99,91,255,0.12), transparent); pointer-events: none; }
+  .hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent); }
+  .hero-inner { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; }
+  .hero-badge { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--blue-glow); border: 1px solid rgba(59,130,246,0.3); padding: 6px 18px; border-radius: 100px; margin-bottom: 32px; animation: fadeSlideDown 0.8s ease both; }
+  .hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(3.5rem, 8vw, 6rem); font-weight: 400; letter-spacing: -2px; line-height: 1; margin-bottom: 20px; animation: fadeSlideDown 0.8s 0.15s ease both; }
+  .hero h1 span { background: linear-gradient(135deg, var(--blue-glow), #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero-sub { font-size: 1.25rem; font-weight: 300; color: rgba(255,255,255,0.7); max-width: 520px; margin: 0 auto 40px; line-height: 1.6; animation: fadeSlideDown 0.8s 0.3s ease both; }
+  .hero-stats { display: flex; justify-content: center; gap: 48px; flex-wrap: wrap; animation: fadeSlideDown 0.8s 0.45s ease both; }
+  .hero-stat { text-align: center; }
+  .hero-stat-value { font-family: 'DM Serif Display', serif; font-size: 2.2rem; color: var(--white); line-height: 1.2; }
+  .hero-stat-label { font-size: 0.78rem; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-top: 4px; }
+
+  /* ─── NAV DOTS ─── */
+  .section-nav { position: fixed; right: 24px; top: 50%; transform: translateY(-50%); z-index: 100; display: flex; flex-direction: column; gap: 12px; }
+  .section-nav a { width: 10px; height: 10px; border-radius: 50%; background: var(--cloud); border: 2px solid var(--mist); transition: all 0.3s; display: block; }
+  .section-nav a:hover { background: var(--blue); border-color: var(--blue); transform: scale(1.3); }
+
+  /* ─── LAYOUT ─── */
+  .container { max-width: 920px; margin: 0 auto; padding: 0 32px; }
+  section { padding: 80px 0; }
+  .section-label { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--blue); margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+  .section-label::before { content: ''; display: block; width: 24px; height: 2px; background: var(--blue); border-radius: 1px; }
+  .section-title { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 4vw, 2.6rem); color: var(--ink); letter-spacing: -0.5px; line-height: 1.2; margin-bottom: 16px; }
+  .section-desc { font-size: 1.08rem; color: var(--slate); max-width: 640px; margin-bottom: 40px; font-weight: 300; line-height: 1.75; }
+  .divider { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--cloud), transparent); margin: 0; }
+
+  /* ─── CARDS ─── */
+  .card { background: var(--white); border-radius: var(--radius); padding: 36px; box-shadow: var(--shadow-card); border: 1px solid rgba(0,0,0,0.04); transition: box-shadow 0.3s, transform 0.3s; }
+  .card:hover { box-shadow: var(--shadow-elevated); transform: translateY(-2px); }
+
+  /* ─── CRISIS ─── */
+  .crisis-cards { display: grid; gap: 16px; }
+  .crisis-card { padding: 24px; border-radius: var(--radius-sm); border-left: 4px solid; }
+  .crisis-card.problem { background: var(--red-pale); border-color: var(--red); }
+  .crisis-card.solution { background: var(--green-pale); border-color: var(--green); }
+  .crisis-card h4 { font-size: 1rem; font-weight: 700; margin-bottom: 6px; color: var(--ink); }
+  .crisis-card p { font-size: 0.92rem; color: var(--slate); line-height: 1.65; }
+
+  /* ─── COMPARISON TABLE ─── */
+  .comparison-table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 8px; font-size: 0.95rem; }
+  .comparison-table thead th { text-align: left; font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--mist); padding: 14px 16px; border-bottom: 2px solid var(--cloud); }
+  .comparison-table tbody td { padding: 18px 16px; border-bottom: 1px solid var(--cloud); vertical-align: middle; }
+  .comparison-table tbody tr:last-child td { border-bottom: none; }
+  .method-name { font-weight: 600; color: var(--ink); }
+  .method-sub { font-size: 0.78rem; color: var(--mist); margin-top: 2px; }
+  .cost-legacy { font-weight: 700; color: var(--red); font-family: 'JetBrains Mono', monospace; font-size: 0.92rem; }
+  .cost-panel { font-weight: 700; color: var(--green); font-family: 'JetBrains Mono', monospace; font-size: 1.05rem; }
+  .speed-fast { font-weight: 600; color: var(--green-dark); background: var(--green-pale); padding: 4px 10px; border-radius: 6px; font-size: 0.85rem; display: inline-block; }
+  .highlight-row { background: linear-gradient(90deg, rgba(5,150,105,0.04), rgba(5,150,105,0.08)); }
+  .highlight-row td:first-child { border-left: 3px solid var(--green); padding-left: 13px; }
+
+  /* ─── CALLOUTS ─── */
+  .callout { padding: 24px 28px; border-radius: var(--radius-sm); margin-top: 20px; font-size: 0.92rem; line-height: 1.7; color: var(--slate); }
+  .callout-blue { background: var(--blue-pale); border-left: 4px solid var(--blue); }
+  .callout-amber { background: var(--amber-pale); border-left: 4px solid var(--amber); }
+  .callout-green { background: var(--green-pale); border-left: 4px solid var(--green); }
+  .callout h4 { color: var(--ink); font-size: 0.95rem; margin-bottom: 6px; }
+
+  /* ─── TRUST LADDER ─── */
+  .trust-ladder { display: flex; flex-direction: column; gap: 0; position: relative; }
+  .trust-ladder::before { content: ''; position: absolute; left: 28px; top: 30px; bottom: 30px; width: 2px; background: linear-gradient(to bottom, var(--blue), var(--green), var(--amber)); border-radius: 1px; }
+  .trust-level { display: flex; align-items: flex-start; gap: 24px; padding: 28px 0; position: relative; }
+  .trust-level + .trust-level { border-top: 1px dashed var(--cloud); }
+  .trust-icon { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; position: relative; z-index: 1; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+  .trust-body h4 { font-size: 1.1rem; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+  .trust-body p { font-size: 0.92rem; color: var(--slate); margin-bottom: 8px; }
+  .unlock-pill { display: inline-flex; align-items: center; gap: 5px; font-size: 0.75rem; font-weight: 600; padding: 5px 12px; border-radius: 100px; letter-spacing: 0.3px; }
+  .trust-note { font-size: 0.82rem; color: var(--mist); font-style: italic; margin-top: 4px; line-height: 1.5; }
+
+  /* ─── DEMOGRAPHICS GRID ─── */
+  .demo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 24px; }
+  .demo-item { padding: 16px 18px; border-radius: var(--radius-sm); border: 1px solid var(--cloud); background: var(--white); }
+  .demo-item.available { border-color: var(--green); background: rgba(5,150,105,0.04); }
+  .demo-item.limited { border-color: var(--amber); background: rgba(217,119,6,0.04); }
+  .demo-item.unavailable { border-color: var(--cloud); background: var(--snow); opacity: 0.7; }
+  .demo-source { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 4px; }
+  .demo-item.available .demo-source { color: var(--green); }
+  .demo-item.limited .demo-source { color: var(--amber); }
+  .demo-item.unavailable .demo-source { color: var(--mist); }
+  .demo-field { font-weight: 600; color: var(--ink); font-size: 0.92rem; }
+  .demo-detail { font-size: 0.8rem; color: var(--slate); margin-top: 2px; }
+
+  /* ─── ARCHITECTURE DIAGRAM ─── */
+  .arch-diagram { background: var(--ink); border-radius: var(--radius); padding: 40px 32px; color: var(--white); position: relative; overflow: hidden; }
+  .arch-diagram::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 20% 80%, rgba(99,91,255,0.1), transparent 50%), radial-gradient(ellipse at 80% 20%, rgba(37,99,235,0.1), transparent 50%); pointer-events: none; }
+  .arch-title { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase; color: var(--stripe); margin-bottom: 36px; text-align: center; position: relative; z-index: 1; }
+  .arch-flow { display: flex; align-items: stretch; justify-content: center; gap: 0; position: relative; z-index: 1; flex-wrap: wrap; }
+  .arch-node { text-align: center; padding: 20px 16px; border-radius: var(--radius-sm); min-width: 150px; max-width: 180px; flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .arch-node-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; margin-bottom: 4px; }
+  .arch-node-label { font-weight: 700; font-size: 0.88rem; line-height: 1.3; }
+  .arch-node-detail { font-size: 0.75rem; color: rgba(255,255,255,0.5); line-height: 1.4; }
+  .arch-node.user .arch-node-icon { background: rgba(37,99,235,0.2); }
+  .arch-node.stripe .arch-node-icon { background: rgba(99,91,255,0.2); }
+  .arch-node.panel .arch-node-icon { background: rgba(5,150,105,0.2); }
+  .arch-arrow { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 6px; min-width: 60px; gap: 6px; }
+  .arch-arrow-line { font-family: 'JetBrains Mono', monospace; font-size: 1.2rem; color: rgba(255,255,255,0.3); letter-spacing: -2px; }
+  .arch-arrow-label { font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; color: rgba(255,255,255,0.4); text-align: center; letter-spacing: 0.5px; line-height: 1.3; max-width: 80px; }
+  .arch-data-row { display: flex; justify-content: center; gap: 10px; margin-top: 28px; flex-wrap: wrap; position: relative; z-index: 1; }
+  .arch-data-pill { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; font-weight: 500; padding: 5px 12px; border-radius: 100px; display: flex; align-items: center; gap: 5px; }
+  .arch-data-pill.safe { background: rgba(5,150,105,0.15); color: #6ee7b7; border: 1px solid rgba(5,150,105,0.3); }
+  .arch-data-pill.blocked { background: rgba(220,38,38,0.12); color: #fca5a5; border: 1px solid rgba(220,38,38,0.25); }
+  .hash-explainer { margin-top: 28px; padding: 20px 24px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-sm); position: relative; z-index: 1; }
+  .hash-explainer h5 { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: var(--blue-glow); margin-bottom: 10px; }
+  .hash-explainer p { font-size: 0.85rem; color: rgba(255,255,255,0.6); line-height: 1.65; }
+  .hash-code { font-family: 'JetBrains Mono', monospace; background: rgba(255,255,255,0.08); padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; color: #a78bfa; }
+
+  /* ─── DASHBOARD MOCK ─── */
+  .dashboard-mock { background: var(--ink); border-radius: var(--radius); padding: 32px; color: var(--white); font-family: 'JetBrains Mono', monospace; position: relative; overflow: hidden; }
+  .dashboard-mock::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at top right, rgba(37,99,235,0.12), transparent 60%); pointer-events: none; }
+  .dash-header { font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase; color: var(--blue-glow); margin-bottom: 28px; display: flex; align-items: center; gap: 8px; }
+  .dash-header::before { content: ''; width: 8px; height: 8px; background: var(--green); border-radius: 50%; box-shadow: 0 0 8px rgba(5,150,105,0.5); animation: pulse 2s ease infinite; }
+  .dash-row { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 0.88rem; }
+  .dash-row:last-of-type { border-bottom: none; }
+  .dash-label { color: rgba(255,255,255,0.5); font-weight: 400; }
+  .dash-value { color: var(--white); font-weight: 600; }
+  .escrow-banner { margin-top: 24px; background: rgba(5,150,105,0.15); border: 1px solid rgba(5,150,105,0.3); color: #6ee7b7; padding: 12px; border-radius: var(--radius-sm); text-align: center; font-size: 0.82rem; font-weight: 600; letter-spacing: 1px; }
+
+  /* ─── NOTIFICATION MOCK ─── */
+  .notif-stage { background: linear-gradient(135deg, #f1f5f9, #e2e8f0); border-radius: var(--radius); padding: 40px; display: flex; justify-content: center; align-items: center; }
+  .notif-card { background: rgba(255,255,255,0.96); backdrop-filter: blur(20px); border-radius: 20px; width: 100%; max-width: 380px; padding: 16px 18px; box-shadow: 0 8px 32px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06); border: 1px solid rgba(255,255,255,0.8); }
+  .notif-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .notif-app { display: flex; align-items: center; gap: 8px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--slate); }
+  .notif-app-icon { width: 22px; height: 22px; background: var(--ink); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; color: white; font-weight: 800; }
+  .notif-time { font-size: 0.72rem; color: var(--mist); font-weight: 500; }
+  .notif-content { color: var(--ink); font-size: 0.95rem; line-height: 1.45; }
+  .notif-content strong { display: block; font-size: 1rem; margin-bottom: 4px; }
+
+  /* ─── QA FLOW ─── */
+  .qa-flow { display: grid; gap: 16px; }
+  .qa-step { display: flex; gap: 20px; padding: 24px; border-radius: var(--radius-sm); border: 1px solid var(--cloud); background: var(--white); transition: border-color 0.3s, box-shadow 0.3s; }
+  .qa-step:hover { border-color: var(--blue-pale); box-shadow: 0 4px 16px rgba(37,99,235,0.06); }
+  .qa-num { font-family: 'DM Serif Display', serif; font-size: 2rem; line-height: 1; flex-shrink: 0; width: 40px; }
+  .qa-step-title { font-weight: 700; color: var(--ink); margin-bottom: 4px; font-size: 1rem; }
+  .qa-step-desc { font-size: 0.9rem; color: var(--slate); line-height: 1.6; }
+  .qa-step:nth-child(1) .qa-num { color: var(--blue); }
+  .qa-step:nth-child(2) .qa-num { color: var(--amber); }
+  .qa-step:nth-child(3) .qa-num { color: var(--green); }
+
+  /* ─── FINANCIALS ─── */
+  .split-visual { display: flex; border-radius: var(--radius-sm); overflow: hidden; margin-bottom: 36px; height: 56px; font-weight: 700; font-size: 0.88rem; }
+  .split-half { flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .split-panelist { background: var(--green); color: white; }
+  .split-panel { background: var(--blue); color: white; }
+  .projection-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 0.92rem; }
+  .projection-table thead th { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--mist); padding: 12px 14px; text-align: left; border-bottom: 2px solid var(--cloud); }
+  .projection-table tbody td { padding: 16px 14px; border-bottom: 1px solid var(--cloud); vertical-align: middle; }
+  .projection-table tbody tr:last-child td { border-bottom: none; background: linear-gradient(90deg, rgba(37,99,235,0.04), rgba(37,99,235,0.08)); }
+  .stage-name { font-weight: 700; color: var(--ink); }
+  .stage-geo { font-size: 0.78rem; color: var(--mist); }
+  .revenue-num { font-family: 'JetBrains Mono', monospace; font-weight: 600; color: var(--green-dark); }
+
+  /* ─── PHONE MOCKUPS ─── */
+  .phone-showcase {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-top: 40px;
+  }
+  .phone-showcase-label {
+    width: 100%;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--mist);
+    margin-bottom: 8px;
+    margin-top: 32px;
+  }
+  .phone-showcase-label:first-child { margin-top: 0; }
+  .phone-frame {
+    width: 280px;
+    height: 560px;
+    background: #1a1a2e;
+    border-radius: 36px;
+    padding: 6px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25), 0 2px 8px rgba(0,0,0,0.1);
+    position: relative;
+  }
+  .phone-speaker {
+    width: 50px;
+    height: 4px;
+    background: #2a2a3e;
+    border-radius: 2px;
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+  }
+  .phone-screen {
+    background: var(--white);
+    border-radius: 30px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .phone-status-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 22px 4px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--ink);
+    background: var(--white);
+  }
+  .phone-status-icons {
+    display: flex;
+    gap: 4px;
+    font-size: 0.6rem;
+  }
+
+  /* Phone screen inner content */
+  .screen-header {
+    padding: 10px 18px 12px;
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem;
+    color: var(--ink);
+    border-bottom: 1px solid var(--cloud);
+  }
+  .screen-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--cloud);
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .screen-tab {
+    flex: 1;
+    text-align: center;
+    padding: 10px 4px;
+    color: var(--mist);
+  }
+  .screen-tab.active {
+    color: var(--blue);
+    border-bottom: 2px solid var(--blue);
+  }
+  .screen-content {
+    flex: 1;
+    padding: 14px;
+    overflow: hidden;
+    font-size: 0.78rem;
+  }
+  .screen-nav {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    border-top: 1px solid var(--cloud);
+    font-size: 0.55rem;
+    font-weight: 600;
+    color: var(--mist);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .screen-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+  }
+  .screen-nav-item.active { color: var(--blue); }
+  .screen-nav-icon { font-size: 1rem; }
+
+  /* Poll card inside phone */
+  .mini-poll {
+    background: var(--snow);
+    border: 1px solid var(--cloud);
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 10px;
+  }
+  .mini-poll-sponsor {
+    font-size: 0.62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--mist);
+    margin-bottom: 4px;
+  }
+  .mini-poll-q {
+    font-weight: 600;
+    color: var(--ink);
+    font-size: 0.82rem;
+    margin-bottom: 8px;
+    line-height: 1.35;
+  }
+  .mini-poll-bounty {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--green-dark);
+    background: var(--green-pale);
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 6px;
+  }
+  .mini-poll-meta {
+    font-size: 0.62rem;
+    color: var(--mist);
+    margin-top: 6px;
+  }
+
+  /* Bill / Vote items inside phone */
+  .mini-item {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--cloud);
+  }
+  .mini-item:last-child { border-bottom: none; }
+  .mini-item-title {
+    font-weight: 600;
+    color: var(--ink);
+    font-size: 0.78rem;
+    margin-bottom: 2px;
+  }
+  .mini-item-meta {
+    font-size: 0.62rem;
+    color: var(--mist);
+    line-height: 1.4;
+  }
+  .mini-tag {
+    display: inline-block;
+    font-size: 0.55rem;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 4px;
+  }
+  .mini-tag.yea { background: var(--green-pale); color: var(--green-dark); }
+  .mini-tag.nay { background: var(--red-pale); color: var(--red); }
+  .mini-tag.pending { background: var(--amber-pale); color: var(--amber); }
+  .mini-tag.buy { background: var(--blue-pale); color: var(--blue-deep); }
+
+  /* Spending item in phone */
+  .mini-spend {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--cloud);
+  }
+  .mini-spend:last-child { border-bottom: none; }
+  .mini-spend-amount {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 0.78rem;
+    color: var(--ink);
+  }
+
+  /* Paraphrase Gate screen elements */
+  .gate-question-box {
+    background: var(--snow);
+    border: 1px solid var(--cloud);
+    border-radius: 10px;
+    padding: 14px;
+    margin-bottom: 12px;
+    font-size: 0.82rem;
+    color: var(--ink);
+    line-height: 1.5;
+    font-weight: 500;
+  }
+  .gate-instruction {
+    font-size: 0.72rem;
+    color: var(--mist);
+    text-align: center;
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+  .gate-textarea {
+    width: 100%;
+    border: 2px solid var(--cloud);
+    border-radius: 10px;
+    padding: 12px;
+    font-size: 0.78rem;
+    color: var(--slate);
+    line-height: 1.5;
+    background: var(--white);
+    min-height: 80px;
+    font-family: 'Outfit', sans-serif;
+    resize: none;
+  }
+  .gate-textarea:focus { border-color: var(--blue); outline: none; }
+  .gate-btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-align: center;
+    margin-top: 12px;
+    cursor: pointer;
+    font-family: 'Outfit', sans-serif;
+  }
+  .gate-btn-disabled {
+    background: var(--cloud);
+    color: var(--mist);
+  }
+  .gate-btn-primary {
+    background: var(--blue);
+    color: var(--white);
+  }
+  .gate-btn-success {
+    background: var(--green);
+    color: var(--white);
+  }
+  .gate-vote-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin-top: 14px;
+  }
+  .gate-vote-btn {
+    padding: 14px 8px;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 0.82rem;
+    border: 2px solid;
+  }
+  .gate-vote-yes { background: var(--green-pale); color: var(--green-dark); border-color: var(--green); }
+  .gate-vote-no { background: var(--red-pale); color: var(--red); border-color: var(--red); }
+  .gate-vote-unsure { background: var(--amber-pale); color: #92400e; border-color: var(--amber); }
+  .gate-progress {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+  .gate-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--cloud);
+  }
+  .gate-dot.active { background: var(--blue); }
+  .gate-dot.done { background: var(--green); }
+  .gate-check {
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .gate-check.pass { background: var(--green-pale); color: var(--green-dark); }
+  .gate-step-label {
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 12px;
+  }
+
+  /* Platform features grid */
+  .platform-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .platform-feature {
+    padding: 20px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--cloud);
+    background: var(--white);
+    transition: border-color 0.3s;
+  }
+  .platform-feature:hover { border-color: var(--blue-pale); }
+  .platform-feature-icon { font-size: 1.5rem; margin-bottom: 10px; }
+  .platform-feature h4 { font-size: 0.95rem; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+  .platform-feature p { font-size: 0.82rem; color: var(--slate); line-height: 1.55; }
+
+  /* ─── CTA ─── */
+  .cta-section { background: var(--gradient-hero); color: var(--white); padding: 80px 40px; text-align: center; position: relative; overflow: hidden; }
+  .cta-section::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 500px 300px at 50% 50%, rgba(37,99,235,0.2), transparent); pointer-events: none; }
+  .cta-inner { position: relative; z-index: 1; }
+  .cta-section h2 { font-family: 'DM Serif Display', serif; font-size: clamp(1.8rem, 4vw, 2.4rem); letter-spacing: -0.5px; margin-bottom: 16px; }
+  .cta-section p { color: rgba(255,255,255,0.6); font-size: 1.05rem; max-width: 500px; margin: 0 auto 32px; font-weight: 300; }
+  .cta-btn { display: inline-block; background: var(--white); color: var(--ink); padding: 14px 40px; border-radius: 100px; font-weight: 700; font-size: 0.95rem; text-decoration: none; transition: transform 0.3s, box-shadow 0.3s; letter-spacing: 0.3px; }
+  .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
+  .footer { text-align: center; padding: 32px; font-size: 0.78rem; color: var(--mist); letter-spacing: 0.5px; }
+
+  @keyframes fadeSlideDown { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  @media (max-width: 680px) {
+    .hero { padding: 72px 24px 56px; }
+    .hero-stats { gap: 28px; }
+    .container { padding: 0 20px; }
+    section { padding: 56px 0; }
+    .card { padding: 24px; }
+    .dashboard-mock { padding: 24px; }
+    .arch-diagram { padding: 28px 20px; }
+    .arch-flow { flex-direction: column; align-items: center; }
+    .arch-arrow { transform: rotate(90deg); min-width: auto; padding: 8px 0; }
+    .arch-node { max-width: 100%; min-width: auto; }
+    .comparison-table { font-size: 0.85rem; }
+    .comparison-table thead th { font-size: 0.6rem; padding: 10px; }
+    .comparison-table tbody td { padding: 14px 10px; }
+    .section-nav { display: none; }
+    .split-visual { font-size: 0.78rem; }
+    .trust-level { gap: 16px; }
+    .trust-icon { width: 44px; height: 44px; font-size: 1.1rem; }
+    .trust-ladder::before { left: 22px; }
+    .projection-table { font-size: 0.82rem; }
+    .projection-table thead th { font-size: 0.58rem; padding: 10px 8px; }
+    .projection-table tbody td { padding: 12px 8px; }
+    .demo-grid { grid-template-columns: 1fr; }
+    .arch-data-row { gap: 6px; }
+    .arch-data-pill { font-size: 0.6rem; padding: 4px 8px; }
+    .phone-showcase { gap: 20px; }
+    .phone-frame { width: 260px; height: 520px; }
+    .platform-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── HERO ─── -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">Confidential — Investor Preview</div>
+    <h1><span>Panel</span></h1>
+    <p class="hero-sub">
+      The verified exchange where real citizens get paid to shape policy — and pollsters get instant, trustworthy data.
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-value">10×</div>
+        <div class="hero-stat-label">Cheaper Than Legacy</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-value">&lt;1hr</div>
+        <div class="hero-stat-label">Time to Results</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-value">$22B</div>
+        <div class="hero-stat-label">Market Opportunity</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="section-nav">
+  <a href="#why-now" title="Why Now"></a>
+  <a href="#arbitrage" title="Market Arbitrage"></a>
+  <a href="#independence" title="Data Independence"></a>
+  <a href="#trust" title="Progressive Trust"></a>
+  <a href="#demographics" title="Demographics"></a>
+  <a href="#architecture" title="Architecture"></a>
+  <a href="#pollster" title="Pollster Experience"></a>
+  <a href="#notification" title="Notifications"></a>
+  <a href="#public-results" title="Public Results"></a>
+  <a href="#quality" title="Quality Assurance"></a>
+  <a href="#platform" title="The Platform"></a>
+  <a href="#app-preview" title="App Preview"></a>
+  <a href="#ai-proof" title="AI-Proof"></a>
+  <a href="#financials" title="Financials"></a>
+</nav>
+
+<div class="container">
+
+  <!-- 01. WHY NOW -->
+  <section id="why-now">
+    <div class="section-label">01 — Market Timing</div>
+    <h2 class="section-title">The Polling Industry<br>Is in Free Fall</h2>
+    <p class="section-desc">
+      Legacy pollsters are retreating, response rates have collapsed to historic lows, and trust in polling data is eroding. The market isn't just ready for disruption — it's begging for it.
+    </p>
+    <div class="crisis-cards">
+      <div class="crisis-card problem">
+        <h4>🚨&ensp;The Gallup Retreat</h4>
+        <p>Gallup has stopped tracking presidential approval ratings — their flagship product for decades — because reaching representative phone samples is now too expensive and statistically unreliable.</p>
+      </div>
+      <div class="crisis-card problem">
+        <h4>📞&ensp;The Landline Fallacy</h4>
+        <p>Most major pollsters still rely on cold-calling landlines and cell numbers. Response rates have fallen below 6%, creating massive non-response bias and producing the kind of high-profile misses we've seen in recent election cycles.</p>
+      </div>
+      <div class="crisis-card problem">
+        <h4>🤖&ensp;The Bot Problem</h4>
+        <p>Existing online panels have no reliable way to verify citizenship or residency. Bots, VPN users, and duplicate accounts corrupt data quality — and there's no economic incentive for respondents to be truthful.</p>
+      </div>
+      <div class="crisis-card solution">
+        <h4>✅&ensp;The Panel Opportunity</h4>
+        <p>Voters are tired of feeling unheard. Panel transforms polling from an unwanted interruption into a paid, verified civic activity — giving every citizen a real voice and real money for sharing it.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 02. MARKET ARBITRAGE -->
+  <section id="arbitrage">
+    <div class="section-label">02 — The Opportunity</div>
+    <h2 class="section-title">A $22B Industry Running<br>on 1970s Infrastructure</h2>
+    <p class="section-desc">
+      Political campaigns and media organizations pay exorbitant rates for "verified" polling data. Panel automates identity verification and delivers results in under an hour — passing the savings to buyers while paying panelists fairly.
+    </p>
+    <div class="card">
+      <table class="comparison-table">
+        <thead>
+          <tr><th>Methodology</th><th>Cost / Verified User</th><th>Speed</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="method-name">Legacy Phone Polls</div><div class="method-sub">Gallup, Siena / NYT, Marist</div></td>
+            <td class="cost-legacy">$35 – $60</td>
+            <td style="color:var(--slate);">2 – 3 weeks</td>
+          </tr>
+          <tr>
+            <td><div class="method-name">Online Panels</div><div class="method-sub">YouGov, Harris, Morning Consult</div></td>
+            <td class="cost-legacy">$5 – $15</td>
+            <td style="color:var(--slate);">3 – 5 days</td>
+          </tr>
+          <tr class="highlight-row">
+            <td><div class="method-name" style="color:var(--green-dark);">Panel</div><div class="method-sub" style="color:var(--green);">Verified Panelists</div></td>
+            <td class="cost-panel">$5.00 min</td>
+            <td><span class="speed-fast">Under 1 hour</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 03. DATA INDEPENDENCE -->
+  <section id="independence">
+    <div class="section-label">03 — Data Independence</div>
+    <h2 class="section-title">Free from Selection Bias.<br>Free from Advertisers.</h2>
+    <p class="section-desc">
+      Panel is completely independent — no media affiliation, no political agenda, no advertising revenue. This independence, combined with our random selection engine, is what makes our data trustworthy.
+    </p>
+
+    <div class="card" style="display:grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+      <div>
+        <h4 style="font-size:1rem; font-weight:700; color:var(--ink); margin-bottom:8px;">🎲&ensp;Random Selection, Not Opt-In</h4>
+        <p style="font-size:0.88rem; color:var(--slate); line-height:1.65;">Traditional panels suffer from self-selection bias — the people who volunteer for surveys are systematically different from those who don't. Panel eliminates this by <strong>randomly selecting</strong> respondents from its verified user base for each poll. Users don't browse and choose which polls to take; they're selected and notified. If a batch doesn't fully respond, we pull another random batch until the sample is filled. This produces statistically representative samples by design.</p>
+      </div>
+      <div>
+        <h4 style="font-size:1rem; font-weight:700; color:var(--ink); margin-bottom:8px;">🚫&ensp;Zero Advertisements, Ever</h4>
+        <p style="font-size:0.88rem; color:var(--slate); line-height:1.65;">Panel will never run ads. Every feature on the platform — voting records, bill tracking, spending alerts, stock trade monitoring — is funded entirely from polling margins. No advertiser influence means no conflict of interest. Users trust the platform because it has no reason to manipulate their attention. This is a civic tool, not an ad delivery vehicle.</p>
+      </div>
+    </div>
+
+    <div class="callout callout-green" style="margin-top:20px;">
+      <h4>📊&ensp;Why This Matters for Data Quality</h4>
+      When a media outlet commissions a Panel poll, the results come from verified citizens who were randomly selected — not self-selected volunteers, not people who follow a particular news source, not users who opted into a panel because of political interest. The result: polling data that's structurally free from the selection biases that plague every existing methodology.
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 04. PROGRESSIVE TRUST LADDER -->
+  <section id="trust">
+    <div class="section-label">04 — User Growth Engine</div>
+    <h2 class="section-title">Progressive Trust Ladder</h2>
+    <p class="section-desc">
+      A US Passport is the required first step — it's the only universally available, definitive proof of US citizenship. From there, users progressively unlock higher-paying local polls by adding more verification. No one registers as an independent contractor until they hit the $600 IRS reporting threshold.
+    </p>
+    <div class="card">
+      <div class="trust-ladder">
+        <div class="trust-level">
+          <div class="trust-icon" style="background: var(--blue-pale); color: var(--blue-deep);">🛂</div>
+          <div class="trust-body">
+            <h4>Level 1 — National Citizen</h4>
+            <p>User scans their US Passport via Stripe Identity. This is the <strong>required first step</strong> for all panelists — no other document can definitively prove US citizenship.</p>
+            <span class="unlock-pill" style="background:var(--blue-pale); color:var(--blue-deep);">Unlocks: National Polls — e.g. "Presidential Approval"</span>
+            <div class="trust-note">Anyone can apply for a US passport — it's the most accessible proof of citizenship available to every eligible American.</div>
+          </div>
+        </div>
+        <div class="trust-level">
+          <div class="trust-icon" style="background: var(--green-pale); color: var(--green-dark);">🏠</div>
+          <div class="trust-body">
+            <h4>Level 2 — Local Resident</h4>
+            <p>User adds their Driver's License. Stripe verifies the ID and returns only state + zip code. Panel confirms identity continuity by matching a fuzzy name hash against the passport hash — the actual name is never stored.</p>
+            <span class="unlock-pill" style="background:var(--green-pale); color:var(--green-dark);">Unlocks: State &amp; Local Polls — e.g. "Virginia Governor Race"</span>
+            <div class="trust-note">A passport must already be on file before a DL can be added. This means national polling launches first, with state/local following as users level up.</div>
+          </div>
+        </div>
+        <div class="trust-level">
+          <div class="trust-icon" style="background: var(--amber-pale); color: #92400e;">⚡</div>
+          <div class="trust-body">
+            <h4>Level 3 — Power Earner</h4>
+            <p>Users are <strong>not</strong> required to provide their SSN or register as an independent contractor until their annual earnings reach <strong>$600</strong> — the IRS reporting threshold. Until then, earnings flow freely with zero tax friction.</p>
+            <span class="unlock-pill" style="background:var(--amber-pale); color:#92400e;">Required at $600/yr: SSN for 1099-NEC Compliance</span>
+            <div class="trust-note">This removes a major registration barrier. Most casual panelists will never hit $600/yr, keeping the onboarding funnel wide open.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-blue" style="margin-top:24px;">
+      <h4>🛂&ensp;Why require a passport?</h4>
+      US citizenship is virtually impossible to prove definitively without a passport. A Driver's License proves residency and identity, but not citizenship. A birth certificate is not a photo ID and is trivially forged. The passport is the only federally issued, photo-verified, machine-readable proof of citizenship available to all Americans — and anyone who doesn't have one can apply for one.
+    </div>
+
+    <div class="callout callout-green" style="margin-top:12px;">
+      <h4>🚀&ensp;Rollout Strategy: National First</h4>
+      Because a passport is required before a DL can be added, Panel launches with national-scale polls from day one. State and local polling unlocks organically as users add Driver's License verification — creating a natural growth flywheel from broad national coverage to hyper-local precision.
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 05. DEMOGRAPHICS -->
+  <section id="demographics">
+    <div class="section-label">05 — Targeting Capabilities</div>
+    <h2 class="section-title">What Pollsters Can<br>Target — and What They Can't</h2>
+    <p class="section-desc">
+      Panel only allows demographic filtering based on data that is hard-coded into government-issued documents or verified by a trusted third-party like ID.me. If we can't cryptographically verify it, we don't offer it.
+    </p>
+    <div class="demo-grid">
+      <div class="demo-item available"><div class="demo-source">Passport</div><div class="demo-field">Age / Date of Birth</div><div class="demo-detail">Derived from passport MRZ data</div></div>
+      <div class="demo-item available"><div class="demo-source">Passport</div><div class="demo-field">Gender</div><div class="demo-detail">As printed on passport (M / F)</div></div>
+      <div class="demo-item available"><div class="demo-source">Driver's License</div><div class="demo-field">State &amp; Zip Code</div><div class="demo-detail">Geographic targeting for state &amp; local polls</div></div>
+      <div class="demo-item available"><div class="demo-source">ID.me</div><div class="demo-field">Military / Veteran Status</div><div class="demo-detail">Verified via ID.me for military-specific polls</div></div>
+      <div class="demo-item limited"><div class="demo-source">Future Roadmap</div><div class="demo-field">Education Level</div><div class="demo-detail">Possible via university degree verification — requires manual validation with institutions</div></div>
+      <div class="demo-item unavailable"><div class="demo-source">Not Targetable</div><div class="demo-field">Race / Ethnicity</div><div class="demo-detail">Not encoded in any government ID — cannot be verified</div></div>
+      <div class="demo-item unavailable"><div class="demo-source">Not Targetable</div><div class="demo-field">Income Level</div><div class="demo-detail">Self-reported data is unreliable — Panel doesn't use it</div></div>
+      <div class="demo-item unavailable"><div class="demo-source">Not Targetable</div><div class="demo-field">Political Affiliation</div><div class="demo-detail">Not verifiable — and targeting it would introduce sampling bias</div></div>
+    </div>
+    <div class="callout callout-amber" style="margin-top:24px;">
+      <h4>🎯&ensp;Our Philosophy: Verifiable or Nothing</h4>
+      Traditional panels let pollsters target any demographic — race, income, party — based on self-reported survey data that's frequently gamed. Panel takes the opposite approach: if we can't verify it from a government-issued document or trusted third party like ID.me, we don't offer it. This constraint is a feature, not a limitation — it's what makes Panel data trustworthy.
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 06. ARCHITECTURE -->
+  <section id="architecture">
+    <div class="section-label">06 — Privacy Architecture</div>
+    <h2 class="section-title">Zero-Knowledge Security:<br>Nothing to Hack</h2>
+    <p class="section-desc">
+      Let's address the elephant in the room: asking users to scan their passport and Driver's License will raise alarm bells. People are right to be cautious — these are the most sensitive documents a person owns. That's exactly why we built Panel so that we never actually possess any of this data. Every document goes directly to Stripe. Panel only receives tokens and hashes. Here's exactly how it works.
+    </p>
+
+    <div class="arch-diagram">
+      <div class="arch-title">Data Flow: Passport Verification (Level 1)</div>
+      <div class="arch-flow">
+        <div class="arch-node user"><div class="arch-node-icon">👤</div><div class="arch-node-label">User</div><div class="arch-node-detail">Scans passport in-app</div></div>
+        <div class="arch-arrow"><div class="arch-arrow-label">Document sent directly</div><div class="arch-arrow-line">———→</div></div>
+        <div class="arch-node stripe"><div class="arch-node-icon">🔐</div><div class="arch-node-label">Stripe Identity</div><div class="arch-node-detail">Validates document, extracts fields</div></div>
+        <div class="arch-arrow"><div class="arch-arrow-label">Tokens only — no PII</div><div class="arch-arrow-line">———→</div></div>
+        <div class="arch-node panel"><div class="arch-node-icon">🟢</div><div class="arch-node-label">Panel DB</div><div class="arch-node-detail">Stores only hash + tokens</div></div>
+      </div>
+      <div class="arch-data-row">
+        <div class="arch-data-pill safe">✓ Citizen = True</div>
+        <div class="arch-data-pill safe">✓ Age bracket</div>
+        <div class="arch-data-pill safe">✓ Gender token</div>
+        <div class="arch-data-pill safe">✓ Fuzzy name hash</div>
+        <div class="arch-data-pill blocked">✕ Full name</div>
+        <div class="arch-data-pill blocked">✕ Passport image</div>
+        <div class="arch-data-pill blocked">✕ Passport number</div>
+      </div>
+      <div class="hash-explainer">
+        <h5>How the Fuzzy Name Hash Works</h5>
+        <p>When a user scans their passport, Stripe extracts the name and Panel generates a one-way <span class="hash-code">fuzzy hash</span> — a normalized, irreversible string that cannot be decoded back to the original name. When the same user later scans a Driver's License, Panel generates another fuzzy hash from the DL name and compares the two. If they match → same person, verified for local polls. If they don't → flagged for review. <strong>At no point does Panel store, see, or log the user's actual name.</strong></p>
+      </div>
+    </div>
+
+    <div class="arch-diagram" style="margin-top:16px;">
+      <div class="arch-title">Data Flow: Driver's License (Level 2)</div>
+      <div class="arch-flow">
+        <div class="arch-node user"><div class="arch-node-icon">👤</div><div class="arch-node-label">User</div><div class="arch-node-detail">Scans DL in-app</div></div>
+        <div class="arch-arrow"><div class="arch-arrow-label">Document sent directly</div><div class="arch-arrow-line">———→</div></div>
+        <div class="arch-node stripe"><div class="arch-node-icon">🔐</div><div class="arch-node-label">Stripe Identity</div><div class="arch-node-detail">Validates ID, extracts fields</div></div>
+        <div class="arch-arrow"><div class="arch-arrow-label">Tokens + geo only</div><div class="arch-arrow-line">———→</div></div>
+        <div class="arch-node panel"><div class="arch-node-icon">🟢</div><div class="arch-node-label">Panel DB</div><div class="arch-node-detail">Matches hash, stores geo</div></div>
+      </div>
+      <div class="arch-data-row">
+        <div class="arch-data-pill safe">✓ State code</div>
+        <div class="arch-data-pill safe">✓ Zip code</div>
+        <div class="arch-data-pill safe">✓ Name hash (matched)</div>
+        <div class="arch-data-pill blocked">✕ DL number</div>
+        <div class="arch-data-pill blocked">✕ DL image</div>
+        <div class="arch-data-pill blocked">✕ Full address</div>
+      </div>
+    </div>
+
+    <div class="arch-diagram" style="margin-top:16px;">
+      <div class="arch-title">Data Flow: Tax Compliance ($600+ Earners Only)</div>
+      <div class="arch-flow">
+        <div class="arch-node user"><div class="arch-node-icon">👤</div><div class="arch-node-label">User</div><div class="arch-node-detail">Hits $600 threshold</div></div>
+        <div class="arch-arrow"><div class="arch-arrow-label">SSN via Stripe</div><div class="arch-arrow-line">———→</div></div>
+        <div class="arch-node stripe"><div class="arch-node-icon">🔐</div><div class="arch-node-label">Stripe Connect</div><div class="arch-node-detail">Issues 1099-NEC automatically</div></div>
+        <div class="arch-arrow"><div class="arch-arrow-label">Status only</div><div class="arch-arrow-line">———→</div></div>
+        <div class="arch-node panel"><div class="arch-node-icon">🟢</div><div class="arch-node-label">Panel DB</div><div class="arch-node-detail">"Tax compliant" — nothing else</div></div>
+      </div>
+      <div class="arch-data-row">
+        <div class="arch-data-pill safe">✓ Tax compliant = True</div>
+        <div class="arch-data-pill blocked">✕ SSN</div>
+        <div class="arch-data-pill blocked">✕ Tax return data</div>
+        <div class="arch-data-pill blocked">✕ Bank details</div>
+      </div>
+    </div>
+
+    <div class="callout callout-blue" style="margin-top:24px;">
+      <h4>🛡️&ensp;What happens if Panel gets breached?</h4>
+      An attacker would find: anonymous user IDs, one-way name hashes (irreversible), boolean citizenship tokens, zip codes, age brackets, and gender flags. <strong>No names, no document images, no SSNs, no addresses, no bank details.</strong> There is nothing in Panel's database that could be used for identity theft — because we architected it that way from day one.
+    </div>
+
+    <div class="callout callout-blue" style="margin-top:12px;">
+      <h4>🔀&ensp;Stripe Never Aggregates Your Documents</h4>
+      The passport verification call and the Driver's License verification call are <strong>completely separate API requests</strong> to Stripe Identity — made at different times, with different session tokens, under different verification contexts. Stripe processes each document independently and returns isolated results. There is no aggregation, no cross-referencing, and no unified identity profile being built on Stripe's side. The <em>only</em> place continuity is established between the two documents is via the fuzzy name hash that Panel generates locally — and that hash is a one-way, irreversible string that neither Stripe nor anyone else can decode back to a name.
+    </div>
+
+    <div class="callout callout-green" style="margin-top:12px;">
+      <h4>📱&ensp;This Isn't New — People Scan IDs Every Day</h4>
+      Scanning government-issued IDs through a phone is not a novel or unusual action. Millions of Americans already do it routinely — to open bank accounts (Chase, Wells Fargo), activate trading platforms (Robinhood, Schwab), verify identity for gig work (Uber, DoorDash), access crypto exchanges (Coinbase), and more. In every one of these cases, the document image is transmitted to a third-party verification provider like Stripe, Jumio, or Onfido. Panel works the same way — except we go further by never retaining the verified data.
+    </div>
+
+    <div class="callout callout-amber" style="margin-top:12px;">
+      <h4>⚠️&ensp;Threat: Copycat / Honeypot Apps</h4>
+      A real risk is bad actors creating fake apps that look like Panel to harvest identity documents. We are mitigating this aggressively. Google now requires all Play Store apps to be signed with verified developer certificates, making it significantly harder to publish convincing clones. On our end, we will actively monitor app stores for look-alikes, issue takedown requests immediately, and educate users on how to verify they're using the authentic Panel app. We'll also maintain a public list of our official app store links and signing certificates.
+    </div>
+
+    <div class="callout callout-green" style="margin-top:12px;">
+      <h4>🔓&ensp;Open Source + Remote Binary Attestation</h4>
+      To give users the ultimate peace of mind, we plan to make Panel's app and backend code <strong>fully open source</strong>. Anyone — security researchers, journalists, skeptical users — can audit exactly what the code does. But open source alone isn't enough (users need to know the app on their phone matches the public code), so we will also implement <strong>remote binary attestation</strong>: a cryptographic process that lets any user verify that the binary running on their device was compiled from the exact public source code — with no hidden modifications, no backdoors, and no secret data collection. This is the highest standard of trust an app can offer.
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 07. POLLSTER EXPERIENCE -->
+  <section id="pollster">
+    <div class="section-label">07 — Buyer-Side Product</div>
+    <h2 class="section-title">Pre-Funded, Instant,<br>Zero Credit Risk</h2>
+    <p class="section-desc">
+      Pollsters fund an escrow wallet before launching. Every notification that reaches a panelist is backed by real, locked money — building instant trust on both sides.
+    </p>
+    <div class="dashboard-mock">
+      <div class="dash-header">Pollster Dashboard — Live Preview</div>
+      <div class="dash-row"><span class="dash-label">Target Audience</span><span class="dash-value">Women · Virginia · Age 18–35</span></div>
+      <div class="dash-row"><span class="dash-label">Sample Size</span><span class="dash-value">1,000 Verified Panelists</span></div>
+      <div class="dash-row"><span class="dash-label">Bounty per Response</span><span class="dash-value" style="color:#6ee7b7;">$5.00</span></div>
+      <div class="dash-row"><span class="dash-label">Total Escrow Required</span><span class="dash-value">$5,000.00</span></div>
+      <div class="escrow-banner">✓&ensp;FUNDS VERIFIED &amp; LOCKED IN ESCROW</div>
+    </div>
+
+    <div class="callout callout-blue" style="margin-top:24px;">
+      <h4>🎲&ensp;Random Selection Engine</h4>
+      Panel doesn't blast notifications to every eligible user. When a pollster defines their criteria — say, "US Women aged 45–55" — Panel <strong>randomly selects</strong> a batch from the matching pool and sends them a push notification. If only 500 of the initial 1,000 respond, Panel automatically selects and notifies another random batch from the remaining eligible pool. This process repeats until the poll's sample size is fully filled. Random selection eliminates self-selection bias (a major flaw in opt-in panels) and ensures every poll produces a statistically representative sample.
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 08. NOTIFICATION -->
+  <section id="notification">
+    <div class="section-label">08 — Engagement Mechanism</div>
+    <h2 class="section-title">The "Secured Bounty"<br>Push Notification</h2>
+    <p class="section-desc">
+      When a user is randomly selected for a poll, they receive a push notification showing the exact bounty amount — already locked in escrow. This "guaranteed money" framing drives immediate engagement and completion rates that dwarf traditional survey invitations.
+    </p>
+    <div class="notif-stage">
+      <div class="notif-card">
+        <div class="notif-top">
+          <div class="notif-app"><div class="notif-app-icon">P</div> Panel</div>
+          <span class="notif-time">now</span>
+        </div>
+        <div class="notif-content">
+          <strong>💰 Secured Bounty: $10.00</strong>
+          CNN has fully funded a priority poll for Verified VA Residents. 1,000 spots remaining. Tap to claim yours.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 08b. PUBLIC RESULTS -->
+  <section id="public-results">
+    <div class="section-label">09 — Open Data</div>
+    <h2 class="section-title">Public by Default.<br>Private at a Premium.</h2>
+    <p class="section-desc">
+      By default, every poll result is published openly on the app for all users to see — live as responses come in, and archived once complete. But for sponsors who need confidentiality, Panel offers a private polling tier at a higher price.
+    </p>
+
+    <div class="card" style="display:grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+      <div>
+        <h4 style="font-size:1rem; font-weight:700; color:var(--ink); margin-bottom:8px;">📡&ensp;Public Polls (Default)</h4>
+        <p style="font-size:0.88rem; color:var(--slate); line-height:1.65;">Any user can browse recently completed polls or watch results come in live — even if they weren't selected to participate. Sponsors are free to use their results on air, in print, or in any publication. The public can independently verify every result on the app.</p>
+      </div>
+      <div>
+        <h4 style="font-size:1rem; font-weight:700; color:var(--ink); margin-bottom:8px;">🔒&ensp;Private Polls (Premium)</h4>
+        <p style="font-size:0.88rem; color:var(--slate); line-height:1.65;">Political strategists and campaigns can commission private polls whose results are only visible to the sponsor. The poll question is not displayed publicly, screenshots are disabled within the app to prevent social media leaks, and results never appear in the public feed. This lets campaigns gather intelligence without tipping off their competition.</p>
+      </div>
+    </div>
+
+    <div class="callout callout-green" style="margin-top:20px;">
+      <h4>🌐&ensp;Why Public by Default?</h4>
+      Transparency builds trust — both with users and with the broader public. When anyone can see every public poll, every methodology, and every result, there's no room for accusations of cherry-picked data or hidden findings. It also turns Panel into a destination: even users who aren't participating in a given poll have a reason to open the app and check what America is thinking right now. The private tier is a premium revenue stream, not the default mode.
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 10. QUALITY ASSURANCE -->
+  <section id="quality">
+    <div class="section-label">10 — Data Integrity</div>
+    <h2 class="section-title">The "Paraphrase Gate"<br>Bot-Killer Engine</h2>
+    <p class="section-desc">
+      The #1 problem in digital polling: respondents clicking without reading. Panel enforces a cognitive checkpoint before every vote to guarantee data integrity.
+    </p>
+    <div class="qa-flow">
+      <div class="qa-step"><div class="qa-num">1</div><div><div class="qa-step-title">Read the Question</div><div class="qa-step-desc">The panelist reads the full policy question on screen. Vote buttons are intentionally hidden at this stage.</div></div></div>
+      <div class="qa-step"><div class="qa-num">2</div><div><div class="qa-step-title">Paraphrase Gate</div><div class="qa-step-desc">On a separate screen, the user types a brief summary of what they just read. Our AI engine validates semantic meaning — gibberish or copy-paste attempts are rejected.</div></div></div>
+      <div class="qa-step"><div class="qa-num">3</div><div><div class="qa-step-title">Cast Your Vote</div><div class="qa-step-desc">Only after passing the gate do voting buttons appear. This ensures every recorded response reflects genuine comprehension and intent.</div></div></div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 10. BEYOND POLLING — THE CIVIC PLATFORM -->
+  <section id="platform">
+    <div class="section-label">11 — Beyond Polling</div>
+    <h2 class="section-title">A Full Civic<br>Transparency Platform</h2>
+    <p class="section-desc">
+      Panel isn't just a polling app — it's a civic intelligence hub. Polling revenue funds a suite of free transparency tools that keep users engaged between polls, drive daily app opens, and reinforce Panel's position as the trusted, ad-free home for civic participation.
+    </p>
+
+    <div class="callout callout-blue" style="margin-bottom:32px; margin-top:0;">
+      <h4>🤔&ensp;Why build all of this? Why not just do polling?</h4>
+      Because polling is only half the problem. Americans don't just want to be heard — they want to understand what their government is actually doing, and they want help figuring out who truly represents their values. Today, that information is scattered across dozens of websites, buried in legalese, and filtered through partisan media. Panel brings it all together in one place: total accountability for elected officials, and a data-driven way for every citizen to figure out exactly who to vote for — based on what matters most to <em>them</em>, not what a cable news anchor tells them should matter.
+    </div>
+
+    <div class="platform-grid">
+      <div class="platform-feature">
+        <div class="platform-feature-icon">🗳️</div>
+        <h4>Voting Records</h4>
+        <p>Track the complete voting history of every US politician at every level — federal, state, and local. See how your representatives actually vote, not just what they promise.</p>
+      </div>
+      <div class="platform-feature">
+        <div class="platform-feature-icon">📜</div>
+        <h4>Bill Tracker</h4>
+        <p>Full text of every bill currently in Congress, with plain-language summaries, status updates, and push notifications when bills you follow move through committee or go to a vote.</p>
+      </div>
+      <div class="platform-feature">
+        <div class="platform-feature-icon">💸</div>
+        <h4>Government Spending Alerts</h4>
+        <p>Real-time notifications for trackable government spending — contracts, earmarks, agency budgets. Users can follow specific departments or spending categories.</p>
+      </div>
+      <div class="platform-feature">
+        <div class="platform-feature-icon">📈</div>
+        <h4>Congressional Stock Tracker</h4>
+        <p>Integrated API feeds showing stock purchases and sales made by members of Congress, with alerts when new STOCK Act disclosures are filed.</p>
+      </div>
+      <div class="platform-feature">
+        <div class="platform-feature-icon">📋</div>
+        <h4>Policy Position Profiles</h4>
+        <p>Browse the stated policy positions of every politician currently in office or running for office — sourced from official platforms, public statements, and legislative records. Compare candidates side-by-side on the issues that matter to you.</p>
+      </div>
+      <div class="platform-feature">
+        <div class="platform-feature-icon">🧭</div>
+        <h4>Vote Match — "Who Should I Vote For?"</h4>
+        <p>Users indicate their stance on key policy issues and <strong>rank them by personal importance</strong> — from most critical to least. Panel then matches them with candidates at every level of government whose positions most closely align, weighted by what the user actually cares about. A personal voter guide built from data, not partisan media.</p>
+      </div>
+    </div>
+
+    <div class="callout callout-green" style="margin-top:24px;">
+      <h4>💡&ensp;How It's All Funded</h4>
+      Every one of these features is funded by margins from polling revenue — Panel's 50% cut. There are <strong>zero advertisements</strong> anywhere in the app. No sponsored content, no data sales, no promoted posts. This means users can trust that the information they see is never influenced by an advertiser's agenda. The platform exists to serve citizens, not to monetize their attention.
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 11. APP MOCKUPS -->
+  <section id="app-preview">
+    <div class="section-label">12 — Product Preview</div>
+    <h2 class="section-title">The Panel App</h2>
+    <p class="section-desc">
+      The core experience: get notified, read a question, prove you understood it, cast your vote, get paid. Below that, a full civic transparency platform. Here's what users will see.
+    </p>
+
+    <div class="phone-showcase">
+
+      <div class="phone-showcase-label">The Polling Experience — 3-Step Paraphrase Gate</div>
+
+      <!-- GATE PHONE 1: Read the Question -->
+      <div class="phone-frame">
+        <div class="phone-speaker"></div>
+        <div class="phone-screen">
+          <div class="phone-status-bar"><span>9:41</span><div class="phone-status-icons">■■■ ▶ ⚡</div></div>
+          <div class="screen-header" style="font-size:1.1rem;">Active Poll</div>
+          <div class="screen-content" style="flex:1; display:flex; flex-direction:column;">
+            <div class="gate-progress">
+              <div class="gate-dot active"></div>
+              <div class="gate-dot"></div>
+              <div class="gate-dot"></div>
+            </div>
+            <div class="gate-step-label">Step 1 of 3 — Read Carefully</div>
+            <div style="font-size:0.62rem; font-weight:600; color:var(--mist); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px;">CNN · National Poll</div>
+            <div class="gate-question-box">
+              "The Federal Reserve has proposed raising interest rates by 0.5% to combat inflation, which economists predict could slow GDP growth by 1.2% over the next fiscal year. Do you support this policy?"
+            </div>
+            <div class="gate-instruction">Read the question above carefully.<br>You'll be asked to paraphrase it next.</div>
+            <div style="flex:1;"></div>
+            <div class="gate-btn gate-btn-primary">I've Read It — Continue →</div>
+          </div>
+          <div class="screen-nav">
+            <div class="screen-nav-item active"><div class="screen-nav-icon">📊</div>Polls</div>
+            <div class="screen-nav-item"><div class="screen-nav-icon">🏛️</div>Gov</div>
+            <div class="screen-nav-item"><div class="screen-nav-icon">🔔</div>Alerts</div>
+            <div class="screen-nav-item"><div class="screen-nav-icon">👤</div>Profile</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GATE PHONE 2: Paraphrase -->
+      <div class="phone-frame">
+        <div class="phone-speaker"></div>
+        <div class="phone-screen">
+          <div class="phone-status-bar"><span>9:41</span><div class="phone-status-icons">■■■ ▶ ⚡</div></div>
+          <div class="screen-header" style="font-size:1.1rem;">Paraphrase Gate</div>
+          <div class="screen-content" style="flex:1; display:flex; flex-direction:column;">
+            <div class="gate-progress">
+              <div class="gate-dot done"></div>
+              <div class="gate-dot active"></div>
+              <div class="gate-dot"></div>
+            </div>
+            <div class="gate-step-label">Step 2 of 3 — Prove You Read It</div>
+            <div class="gate-instruction">In your own words, briefly describe what the question asked about.</div>
+            <textarea class="gate-textarea" readonly>The Fed wants to raise rates by half a percent to fight inflation but it might hurt economic growth by about 1%. They want to know if I think that's a good idea.</textarea>
+            <div class="gate-check pass">✓ AI Verification: Semantic match confirmed</div>
+            <div style="flex:1;"></div>
+            <div class="gate-btn gate-btn-success">Verified — Proceed to Vote →</div>
+          </div>
+          <div class="screen-nav">
+            <div class="screen-nav-item active"><div class="screen-nav-icon">📊</div>Polls</div>
+            <div class="screen-nav-item"><div class="screen-nav-icon">🏛️</div>Gov</div>
+            <div class="screen-nav-item"><div class="screen-nav-icon">🔔</div>Alerts</div>
+            <div class="screen-nav-item"><div class="screen-nav-icon">👤</div>Profile</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GATE PHONE 3: Vote -->
+      <div class="phone-frame">
+        <div class="phone-speaker"></div>
+        <div class="phone-screen">
+          <div class="phone-status-bar"><span>9:41</span><div class="phone-status-icons">■■■ ▶ ⚡</div></div>
+          <div class="screen-header" style="font-size:1.1rem;">Cast Your Vote</div>
+          <div class="screen-content" style="flex:1; display:flex; flex-direction:column;">
+            <div class="gate-progress">
+              <div class="gate-dot done"></div>
+              <div class="gate-dot done"></div>
+              <div class="gate-dot active"></div>
+            </div>
+            <div class="gate-step-label">Step 3 of 3 — Vote</div>
+            <div class="gate-question-box" style="font-size:0.78rem;">
+              Do you support the Federal Reserve raising interest rates by 0.5% to combat inflation, even if it may slow GDP growth?
+            </div>
+            <div class="gate-vote-grid">
+              <div class="gate-vote-btn gate-vote-yes">Yes</div>
+              <div class="gate-vote-btn gate-vote-no">No</div>
+              <div class="gate-vote-btn gate-vote-unsure">Unsure</div>
+            </div>
+            <div style="flex:1;"></div>
+            <div style="text-align:center; margin-top:16px;">
+              <div class="mini-poll-bounty" style="font-size:0.75rem;">💰 $8.00 will be deposited upon submission</div>
+            </div>
+          </div>
+          <div class="screen-nav">
+            <div class="screen-nav-item active"><div class="screen-nav-icon">📊</div>Polls</div>
+            <div class="screen-nav-item"><div class="screen-nav-icon">🏛️</div>Gov</div>
+            <div class="screen-nav-item"><div class="screen-nav-icon">🔔</div>Alerts</div>
+            <div class="screen-nav-item"><div class="screen-nav-icon">👤</div>Profile</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="phone-showcase-label">Core App Tabs</div>
+
+      <!-- PHONE 1: Polls Tab -->
+      <div class="phone-frame">
+        <div class="phone-speaker"></div>
+        <div class="phone-screen">
+          <div class="phone-status-bar"><span>9:41</span><div class="phone-status-icons">■■■ ▶ ⚡</div></div>
+          <div class="screen-header">Panel</div>
+          <div class="screen-tabs">
+            <div class="screen-tab active">Polls</div>
+            <div class="screen-tab">Records</div>
+            <div class="screen-tab">Bills</div>
+            <div class="screen-tab">Spending</div>
+          </div>
+          <div class="screen-content">
+            <div class="mini-poll">
+              <div class="mini-poll-sponsor">CNN · National</div>
+              <div class="mini-poll-q">Do you approve of the President's handling of the economy?</div>
+              <div class="mini-poll-bounty">💰 $8.00 Secured</div>
+              <div class="mini-poll-meta">847 of 1,000 spots remaining · Expires in 4h</div>
+            </div>
+            <div class="mini-poll">
+              <div class="mini-poll-sponsor">AP News · National</div>
+              <div class="mini-poll-q">Should the US increase funding for public transportation?</div>
+              <div class="mini-poll-bounty">💰 $5.00 Secured</div>
+              <div class="mini-poll-meta">312 of 500 spots remaining · Expires in 2h</div>
+            </div>
+            <div class="mini-poll" style="opacity:0.5;">
+              <div class="mini-poll-sponsor">NBC4 · Virginia Only</div>
+              <div class="mini-poll-q">Do you support the proposed I-66 toll increase?</div>
+              <div class="mini-poll-bounty">💰 $10.00 Secured</div>
+              <div class="mini-poll-meta">🔒 Requires Level 2 (Driver's License)</div>
+            </div>
+          </div>
+          <div class="screen-nav">
+            <div class="screen-nav-item active"><div class="screen-nav-icon">📊</div>Polls</div>
+            <div class="screen-nav-item"><div class="screen-nav-icon">🏛️</div>Gov</div>
+            <div class="screen-nav-item"><div class="screen-nav-icon">🔔</div>Alerts</div>
+            <div class="screen-nav-item"><div class="screen-nav-icon">👤</div>Profile</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PHONE 2: Voting Records -->
+      <div class="phone-frame">
+        <div class="phone-speaker"></div>
+        <div class="phone-screen">
+          <div class="phone-status-bar"><span>9:41</span><div class="phone-status-icons">■■■ ▶ ⚡</div></div>
+          <div class="screen-header">Voting Records</div>
+          <div class="screen-tabs">
+            <div class="screen-tab">Polls</div>
+            <div class="screen-tab active">Records</div>
+            <div class="screen-tab">Bills</div>
+            <div class="screen-tab">Spending</div>
+          </div>
+          <div class="screen-content">
+            <div style="font-size:0.68rem; font-weight:600; color:var(--mist); text-transform:uppercase; letter-spacing:1px; margin-bottom:10px;">Sen. Mark Warner (D-VA)</div>
+            <div class="mini-item"><div class="mini-item-title">SAVE Act — HR 7109</div><div class="mini-item-meta">Proof of citizenship for voter registration</div><span class="mini-tag nay">Nay</span></div>
+            <div class="mini-item"><div class="mini-item-title">Infrastructure Investment Act</div><div class="mini-item-meta">$1.2T for roads, bridges, broadband</div><span class="mini-tag yea">Yea</span></div>
+            <div class="mini-item"><div class="mini-item-title">TikTok Ban — S. 1082</div><div class="mini-item-meta">Divest-or-ban for foreign-owned apps</div><span class="mini-tag yea">Yea</span></div>
+            <div class="mini-item"><div class="mini-item-title">CHIPS and Science Act</div><div class="mini-item-meta">$52B for domestic semiconductor mfg</div><span class="mini-tag yea">Yea</span></div>
+          </div>
+          <div class="screen-nav">
+            <div class="screen-nav-item"><div class="screen-nav-icon">📊</div>Polls</div>
+            <div class="screen-nav-item active"><div class="screen-nav-icon">🏛️</div>Gov</div>
+            <div class="screen-nav-item"><div class="screen-nav-icon">🔔</div>Alerts</div>
+            <div class="screen-nav-item"><div class="screen-nav-icon">👤</div>Profile</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PHONE 3: Congressional Trades -->
+      <div class="phone-frame">
+        <div class="phone-speaker"></div>
+        <div class="phone-screen">
+          <div class="phone-status-bar"><span>9:41</span><div class="phone-status-icons">■■■ ▶ ⚡</div></div>
+          <div class="screen-header">Congressional Trades</div>
+          <div class="screen-tabs">
+            <div class="screen-tab">Polls</div>
+            <div class="screen-tab">Records</div>
+            <div class="screen-tab">Bills</div>
+            <div class="screen-tab active">Trades</div>
+          </div>
+          <div class="screen-content">
+            <div style="font-size:0.68rem; font-weight:600; color:var(--mist); text-transform:uppercase; letter-spacing:1px; margin-bottom:10px;">Recent STOCK Act Disclosures</div>
+            <div class="mini-item"><div class="mini-item-title">Rep. Nancy Pelosi (D-CA)</div><div class="mini-item-meta">NVDA — 50 call options · $1M–$5M</div><span class="mini-tag buy">Purchase</span><div class="mini-item-meta" style="margin-top:4px;">Filed Mar 28, 2026 · Traded Mar 21</div></div>
+            <div class="mini-item"><div class="mini-item-title">Sen. Tommy Tuberville (R-AL)</div><div class="mini-item-meta">MSFT — 2,000 shares · $500K–$1M</div><span class="mini-tag buy">Purchase</span><div class="mini-item-meta" style="margin-top:4px;">Filed Mar 25, 2026 · Traded Mar 18</div></div>
+            <div class="mini-item"><div class="mini-item-title">Rep. Dan Crenshaw (R-TX)</div><div class="mini-item-meta">AAPL — 500 shares · $100K–$250K</div><span class="mini-tag nay">Sale</span><div class="mini-item-meta" style="margin-top:4px;">Filed Mar 22, 2026 · Traded Mar 15</div></div>
+          </div>
+          <div class="screen-nav">
+            <div class="screen-nav-item"><div class="screen-nav-icon">📊</div>Polls</div>
+            <div class="screen-nav-item"><div class="screen-nav-icon">🏛️</div>Gov</div>
+            <div class="screen-nav-item"><div class="screen-nav-icon">🔔</div>Alerts</div>
+            <div class="screen-nav-item"><div class="screen-nav-icon">👤</div>Profile</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PARAPHRASE GATE SECTION LABEL -->
+      <div class="phone-showcase-label">Vote Match — Personalized Voter Guide</div>
+
+      <!-- PHONE 4: Vote Match -->
+      <div class="phone-frame">
+        <div class="phone-speaker"></div>
+        <div class="phone-screen">
+          <div class="phone-status-bar"><span>9:41</span><div class="phone-status-icons">■■■ ▶ ⚡</div></div>
+          <div class="screen-header" style="font-size:1.1rem;">Your Policy Stances</div>
+          <div class="screen-content" style="flex:1;">
+            <div class="gate-instruction" style="margin-bottom:14px;">Tell us where you stand. We'll match you with candidates.</div>
+            <div style="margin-bottom:12px;">
+              <div style="font-size:0.72rem; font-weight:700; color:var(--ink); margin-bottom:6px;">Universal Background Checks</div>
+              <div style="display:flex; gap:6px;">
+                <div style="flex:1; padding:8px; border-radius:8px; background:var(--green-pale); color:var(--green-dark); text-align:center; font-size:0.72rem; font-weight:700; border:2px solid var(--green);">Support</div>
+                <div style="flex:1; padding:8px; border-radius:8px; background:var(--snow); color:var(--mist); text-align:center; font-size:0.72rem; font-weight:600; border:1px solid var(--cloud);">Oppose</div>
+                <div style="flex:1; padding:8px; border-radius:8px; background:var(--snow); color:var(--mist); text-align:center; font-size:0.72rem; font-weight:600; border:1px solid var(--cloud);">Neutral</div>
+              </div>
+            </div>
+            <div style="margin-bottom:12px;">
+              <div style="font-size:0.72rem; font-weight:700; color:var(--ink); margin-bottom:6px;">Federal Minimum Wage Increase</div>
+              <div style="display:flex; gap:6px;">
+                <div style="flex:1; padding:8px; border-radius:8px; background:var(--snow); color:var(--mist); text-align:center; font-size:0.72rem; font-weight:600; border:1px solid var(--cloud);">Support</div>
+                <div style="flex:1; padding:8px; border-radius:8px; background:var(--red-pale); color:var(--red); text-align:center; font-size:0.72rem; font-weight:700; border:2px solid var(--red);">Oppose</div>
+                <div style="flex:1; padding:8px; border-radius:8px; background:var(--snow); color:var(--mist); text-align:center; font-size:0.72rem; font-weight:600; border:1px solid var(--cloud);">Neutral</div>
+              </div>
+            </div>
+            <div style="margin-bottom:12px;">
+              <div style="font-size:0.72rem; font-weight:700; color:var(--ink); margin-bottom:6px;">Expand Nuclear Energy</div>
+              <div style="display:flex; gap:6px;">
+                <div style="flex:1; padding:8px; border-radius:8px; background:var(--green-pale); color:var(--green-dark); text-align:center; font-size:0.72rem; font-weight:700; border:2px solid var(--green);">Support</div>
+                <div style="flex:1; padding:8px; border-radius:8px; background:var(--snow); color:var(--mist); text-align:center; font-size:0.72rem; font-weight:600; border:1px solid var(--cloud);">Oppose</div>
+                <div style="flex:1; padding:8px; border-radius:8px; background:var(--snow); color:var(--mist); text-align:center; font-size:0.72rem; font-weight:600; border:1px solid var(--cloud);">Neutral</div>
+              </div>
+            </div>
+            <div style="font-size:0.65rem; color:var(--mist); text-align:center; margin-top:4px;">12 of 20 policy questions answered</div>
+          </div>
+          <div class="screen-nav">
+            <div class="screen-nav-item"><div class="screen-nav-icon">📊</div>Polls</div>
+            <div class="screen-nav-item"><div class="screen-nav-icon">🏛️</div>Gov</div>
+            <div class="screen-nav-item"><div class="screen-nav-icon">🔔</div>Alerts</div>
+            <div class="screen-nav-item active"><div class="screen-nav-icon">👤</div>Profile</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PHONE 5: Rank Your Priorities -->
+      <div class="phone-frame">
+        <div class="phone-speaker"></div>
+        <div class="phone-screen">
+          <div class="phone-status-bar"><span>9:41</span><div class="phone-status-icons">■■■ ▶ ⚡</div></div>
+          <div class="screen-header" style="font-size:1.1rem;">Rank Your Priorities</div>
+          <div class="screen-content" style="flex:1;">
+            <div class="gate-instruction" style="margin-bottom:14px;">Drag to reorder. Issues at the top matter most to you and carry more weight in your match.</div>
+            <div style="display:flex; align-items:center; gap:10px; padding:11px 12px; background:var(--blue-pale); border:2px solid var(--blue); border-radius:10px; margin-bottom:8px;">
+              <div style="font-family:'JetBrains Mono',monospace; font-size:0.7rem; font-weight:800; color:var(--blue); width:18px;">1</div>
+              <div style="flex:1; font-size:0.78rem; font-weight:700; color:var(--ink);">Immigration Reform</div>
+              <div style="color:var(--mist); font-size:0.8rem;">☰</div>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px; padding:11px 12px; background:var(--white); border:1px solid var(--cloud); border-radius:10px; margin-bottom:8px;">
+              <div style="font-family:'JetBrains Mono',monospace; font-size:0.7rem; font-weight:800; color:var(--slate); width:18px;">2</div>
+              <div style="flex:1; font-size:0.78rem; font-weight:700; color:var(--ink);">Expand Nuclear Energy</div>
+              <div style="color:var(--mist); font-size:0.8rem;">☰</div>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px; padding:11px 12px; background:var(--white); border:1px solid var(--cloud); border-radius:10px; margin-bottom:8px;">
+              <div style="font-family:'JetBrains Mono',monospace; font-size:0.7rem; font-weight:800; color:var(--slate); width:18px;">3</div>
+              <div style="flex:1; font-size:0.78rem; font-weight:700; color:var(--ink);">Universal Background Checks</div>
+              <div style="color:var(--mist); font-size:0.8rem;">☰</div>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px; padding:11px 12px; background:var(--white); border:1px solid var(--cloud); border-radius:10px; margin-bottom:8px;">
+              <div style="font-family:'JetBrains Mono',monospace; font-size:0.7rem; font-weight:800; color:var(--slate); width:18px;">4</div>
+              <div style="flex:1; font-size:0.78rem; font-weight:700; color:var(--ink);">Federal Minimum Wage</div>
+              <div style="color:var(--mist); font-size:0.8rem;">☰</div>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px; padding:11px 12px; background:var(--white); border:1px solid var(--cloud); border-radius:10px; margin-bottom:8px; opacity:0.5;">
+              <div style="font-family:'JetBrains Mono',monospace; font-size:0.7rem; font-weight:800; color:var(--mist); width:18px;">5</div>
+              <div style="flex:1; font-size:0.78rem; font-weight:600; color:var(--mist);">Term Limits</div>
+              <div style="color:var(--cloud); font-size:0.8rem;">☰</div>
+            </div>
+            <div style="font-size:0.62rem; color:var(--mist); text-align:center; margin-top:6px;">↕ Drag to reorder · 5 of 20 ranked</div>
+            <div style="flex:1;"></div>
+            <div class="gate-btn gate-btn-primary" style="margin-top:10px;">See My Matches →</div>
+          </div>
+          <div class="screen-nav">
+            <div class="screen-nav-item"><div class="screen-nav-icon">📊</div>Polls</div>
+            <div class="screen-nav-item"><div class="screen-nav-icon">🏛️</div>Gov</div>
+            <div class="screen-nav-item"><div class="screen-nav-icon">🔔</div>Alerts</div>
+            <div class="screen-nav-item active"><div class="screen-nav-icon">👤</div>Profile</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PHONE 6: Vote Match Results -->
+      <div class="phone-frame">
+        <div class="phone-speaker"></div>
+        <div class="phone-screen">
+          <div class="phone-status-bar"><span>9:41</span><div class="phone-status-icons">■■■ ▶ ⚡</div></div>
+          <div class="screen-header" style="font-size:1.1rem;">Your Matches</div>
+          <div class="screen-content" style="flex:1;">
+            <div class="gate-instruction" style="margin-bottom:14px;">Based on your stances, weighted by your priorities</div>
+            <div style="font-size:0.62rem; font-weight:600; color:var(--mist); text-transform:uppercase; letter-spacing:1px; margin-bottom:10px;">US Senate — Virginia</div>
+            <div style="background:var(--green-pale); border:1px solid var(--green); border-radius:10px; padding:12px; margin-bottom:10px;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                  <div style="font-weight:700; color:var(--ink); font-size:0.85rem;">Candidate A</div>
+                  <div style="font-size:0.68rem; color:var(--slate);">Independent</div>
+                </div>
+                <div style="font-family:'JetBrains Mono',monospace; font-size:1.1rem; font-weight:800; color:var(--green-dark);">92%</div>
+              </div>
+              <div style="background:var(--cloud); border-radius:4px; height:6px; margin-top:8px; overflow:hidden;"><div style="background:var(--green); height:100%; width:92%; border-radius:4px;"></div></div>
+            </div>
+            <div style="background:var(--white); border:1px solid var(--cloud); border-radius:10px; padding:12px; margin-bottom:10px;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                  <div style="font-weight:700; color:var(--ink); font-size:0.85rem;">Candidate B</div>
+                  <div style="font-size:0.68rem; color:var(--slate);">Republican</div>
+                </div>
+                <div style="font-family:'JetBrains Mono',monospace; font-size:1.1rem; font-weight:800; color:var(--amber);">74%</div>
+              </div>
+              <div style="background:var(--cloud); border-radius:4px; height:6px; margin-top:8px; overflow:hidden;"><div style="background:var(--amber); height:100%; width:74%; border-radius:4px;"></div></div>
+            </div>
+            <div style="background:var(--white); border:1px solid var(--cloud); border-radius:10px; padding:12px; margin-bottom:10px;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                  <div style="font-weight:700; color:var(--ink); font-size:0.85rem;">Candidate C</div>
+                  <div style="font-size:0.68rem; color:var(--slate);">Democrat</div>
+                </div>
+                <div style="font-family:'JetBrains Mono',monospace; font-size:1.1rem; font-weight:800; color:var(--red);">58%</div>
+              </div>
+              <div style="background:var(--cloud); border-radius:4px; height:6px; margin-top:8px; overflow:hidden;"><div style="background:var(--red); height:100%; width:58%; border-radius:4px;"></div></div>
+            </div>
+            <div style="font-size:0.65rem; color:var(--mist); text-align:center;">Tap any candidate to compare positions side-by-side</div>
+          </div>
+          <div class="screen-nav">
+            <div class="screen-nav-item"><div class="screen-nav-icon">📊</div>Polls</div>
+            <div class="screen-nav-item"><div class="screen-nav-icon">🏛️</div>Gov</div>
+            <div class="screen-nav-item"><div class="screen-nav-icon">🔔</div>Alerts</div>
+            <div class="screen-nav-item active"><div class="screen-nav-icon">👤</div>Profile</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 13. AI-PROOF LABOR -->
+  <section id="ai-proof">
+    <div class="section-label">13 — AI-Proof by Design</div>
+    <h2 class="section-title">The Gig Economy Is About to<br>Lose Millions of Workers.<br>Panel Absorbs Them.</h2>
+    <p class="section-desc">
+      Autonomous vehicles are coming for Uber and Lyft drivers. AI-powered robots are coming for DoorDash and Instacart couriers. Within the next decade, millions of gig workers will be displaced by automation. Panel is one of the rare platforms that benefits from this transition.
+    </p>
+
+    <div class="card" style="display:grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom:24px;">
+      <div>
+        <h4 style="font-size:1rem; font-weight:700; color:var(--ink); margin-bottom:8px;">🤖&ensp;Why AI Can't Replace Panelists</h4>
+        <p style="font-size:0.88rem; color:var(--slate); line-height:1.65;">The entire point of Panel is to capture <strong>verified human opinion</strong>. An AI can drive a car, deliver groceries, and write code — but it cannot be a citizen with a valid passport, a genuine political opinion, and a verified residential address. Panel's value proposition is intrinsically human. The more AI automates everything else, the <em>more</em> valuable authentic human input becomes. Our product is literally the thing AI cannot fake.</p>
+      </div>
+      <div>
+        <h4 style="font-size:1rem; font-weight:700; color:var(--ink); margin-bottom:8px;">🔄&ensp;Repurposing Displaced Gig Labor</h4>
+        <p style="font-size:0.88rem; color:var(--slate); line-height:1.65;">When an Uber driver loses their gig to a Waymo, they still have a phone, they still need income, and they're already comfortable with app-based micro-earnings. Panel is a natural landing pad: no car required, no schedule, no physical labor — just scan your passport, answer questions from your couch, and get paid. As autonomous driving and delivery AI eliminates traditional gig work, Panel's potential labor pool doesn't shrink — it explodes.</p>
+      </div>
+    </div>
+
+    <div class="callout callout-green">
+      <h4>📈&ensp;A Tailwind, Not a Headwind</h4>
+      Most startups are racing to figure out how AI will disrupt their business. Panel has the opposite problem: AI disruption in adjacent industries actively drives our growth. Every gig worker displaced by autonomy is a potential panelist. Every AI-generated deepfake and bot-flooded survey makes verified human opinion more scarce and more valuable. Panel sits at the intersection of these two mega-trends — rising supply of available labor and rising demand for authentic human data.
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 14. FINANCIALS -->
+  <section id="financials">
+    <div class="section-label">14 — Unit Economics</div>
+    <h2 class="section-title">A Bid-Based Marketplace<br>with a 50/50 Split</h2>
+    <p class="section-desc">
+      Panel operates as a marketplace with a $5.00 minimum bid per verified response and a flat 50/50 revenue split. Sponsors who need faster results simply bid higher — higher bounties mean higher panelist payouts, higher response rates, and faster fill times. It's not an artificial mechanism; it's just economics.
+    </p>
+    <div class="split-visual">
+      <div class="split-half split-panelist">Panelist — 50%</div>
+      <div class="split-half split-panel">Panel — 50%</div>
+    </div>
+
+    <div class="card" style="display:grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom:24px;">
+      <div>
+        <h4 style="font-size:1rem; font-weight:700; color:var(--ink); margin-bottom:8px;">⚡&ensp;Priority Queue</h4>
+        <p style="font-size:0.88rem; color:var(--slate); line-height:1.65;">When a panelist has multiple pending poll invitations, the highest-bounty poll is delivered first. Sponsors who bid above the minimum naturally get faster fill rates — no special "priority" fee required. The marketplace self-optimizes: a $10 bounty poll will fill faster than a $5 one because panelists respond to money.</p>
+      </div>
+      <div>
+        <h4 style="font-size:1rem; font-weight:700; color:var(--ink); margin-bottom:8px;">⏱️&ensp;Speed Guarantees (Premium)</h4>
+        <p style="font-size:0.88rem; color:var(--slate); line-height:1.65;">For sponsors who need results on a hard deadline — breaking news polls, debate night reactions, election eve snapshots — Panel offers a guaranteed fill time (e.g., "1,000 responses in 30 minutes"). We achieve this by sending larger initial batches and more aggressive re-batching. Think of it like surge pricing: you're paying for immediacy.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <table class="projection-table">
+        <thead>
+          <tr><th>Stage</th><th>Users</th><th>Monthly Polls</th><th>Avg Bid</th><th>Monthly Rev</th><th>Net Profit</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="stage-name">Launch</span><br><span class="stage-geo">National (Passport-Only)</span></td>
+            <td>5,000</td><td>50</td><td style="font-family:'JetBrains Mono',monospace; font-size:0.85rem;">$5.00</td><td class="revenue-num">$125K</td><td class="revenue-num">$122K</td>
+          </tr>
+          <tr>
+            <td><span class="stage-name">Growth</span><br><span class="stage-geo">National + State Unlocking</span></td>
+            <td>50,000</td><td>200</td><td style="font-family:'JetBrains Mono',monospace; font-size:0.85rem;">$7.50</td><td class="revenue-num">$750K</td><td class="revenue-num">$735K</td>
+          </tr>
+          <tr>
+            <td><span class="stage-name">Scale</span><br><span class="stage-geo">Full National + Local</span></td>
+            <td>1,000,000</td><td>5,000</td><td style="font-family:'JetBrains Mono',monospace; font-size:0.85rem;">$10.00</td><td class="revenue-num">$25.0M</td><td class="revenue-num">$24.2M</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout callout-blue" style="margin-top:20px;">
+      <h4>📐&ensp;Why the Numbers Go Up</h4>
+      As the platform scales, average bids naturally rise. At launch, most polls are national with large eligible pools — $5 fills them easily. As state and local polls unlock, smaller pools mean more competition among sponsors for the same verified panelists, driving bids higher. At scale, breaking news and election-cycle demand creates surge pricing dynamics. The $5 floor is where we start — the market determines where it goes.
+    </div>
+  </section>
+
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="cta-inner">
+    <h2>Let's Build the Future of Polling</h2>
+    <p>We're raising our seed round and looking for co-founders who are passionate about democratic infrastructure.</p>
+    <a href="/cdn-cgi/l/email-protection#8fe7eae3e3e0cfffeee1eae3eeffffa1ece0e2" class="cta-btn">Get In Touch →</a>
+  </div>
+</div>
+
+<div class="footer">
+  &copy; 2026 Panel, Inc. &ensp;·&ensp; Confidential &amp; Proprietary &ensp;·&ensp; All 
