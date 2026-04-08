@@ -537,8 +537,55 @@
   .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
   .footer { text-align: center; padding: 32px; font-size: 0.78rem; color: var(--mist); letter-spacing: 0.5px; }
 
+  /* ─── CIVIC ACADEMY ─── */
+  :root { --gold: #f59e0b; --gold-pale: #fef3c7; --gold-dark: #92400e; --purple: #7c3aed; --purple-pale: #ede9fe; --purple-glow: #a78bfa; }
+  .academy-hero { background: linear-gradient(135deg, #0c1220 0%, #1e1b4b 50%, #0c1220 100%); border-radius: var(--radius); padding: 40px 36px; color: var(--white); position: relative; overflow: hidden; margin-bottom: 32px; }
+  .academy-hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 400px 300px at 20% 80%, rgba(124,58,237,0.18), transparent), radial-gradient(ellipse 300px 250px at 80% 20%, rgba(245,158,11,0.12), transparent); pointer-events: none; }
+  .academy-hero-inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: center; }
+  .academy-hero h3 { font-family: 'DM Serif Display', serif; font-size: 1.8rem; letter-spacing: -0.5px; margin-bottom: 10px; }
+  .academy-hero p { font-size: 0.95rem; color: rgba(255,255,255,0.65); line-height: 1.65; font-weight: 300; }
+  .power-badge { background: linear-gradient(135deg, #f59e0b, #d97706); border-radius: 16px; padding: 20px 24px; text-align: center; min-width: 150px; box-shadow: 0 8px 32px rgba(245,158,11,0.3); }
+  .power-badge-icon { font-size: 2.5rem; display: block; margin-bottom: 8px; }
+  .power-badge-label { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.7); margin-bottom: 4px; }
+  .power-badge-title { font-weight: 800; font-size: 1rem; color: var(--white); }
+  .power-badge-split { font-family: 'JetBrains Mono', monospace; font-size: 1.6rem; font-weight: 800; color: var(--white); margin-top: 4px; }
+  .power-badge-split-sub { font-size: 0.65rem; color: rgba(255,255,255,0.65); }
+  .xp-track { margin: 28px 0 0; }
+  .xp-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .xp-label { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--purple-glow); }
+  .xp-count { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; font-weight: 700; color: var(--white); }
+  .xp-bar-rail { background: rgba(255,255,255,0.1); border-radius: 100px; height: 10px; overflow: hidden; }
+  .xp-bar-fill { background: linear-gradient(90deg, #7c3aed, #a78bfa); border-radius: 100px; height: 100%; width: 68%; transition: width 1s ease; }
+  .quiz-module-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 28px; }
+  .quiz-module { background: var(--white); border: 1px solid var(--cloud); border-radius: var(--radius-sm); padding: 20px; transition: border-color 0.3s, box-shadow 0.3s; position: relative; overflow: hidden; }
+  .quiz-module:hover { border-color: var(--purple-pale); box-shadow: 0 4px 16px rgba(124,58,237,0.08); }
+  .quiz-module.locked { opacity: 0.55; pointer-events: none; }
+  .quiz-module.completed { border-color: var(--green); background: rgba(5,150,105,0.03); }
+  .quiz-module-icon { font-size: 1.6rem; margin-bottom: 10px; display: block; }
+  .quiz-module-title { font-weight: 700; color: var(--ink); font-size: 0.95rem; margin-bottom: 4px; }
+  .quiz-module-meta { font-size: 0.78rem; color: var(--slate); margin-bottom: 12px; line-height: 1.4; }
+  .quiz-module-progress-rail { background: var(--cloud); border-radius: 100px; height: 6px; overflow: hidden; margin-bottom: 5px; }
+  .quiz-module-progress-fill { border-radius: 100px; height: 100%; }
+  .quiz-module-progress-fill.purple { background: linear-gradient(90deg, #7c3aed, #a78bfa); }
+  .quiz-module-progress-fill.green { background: var(--green); }
+  .quiz-module-progress-fill.amber { background: var(--amber); }
+  .quiz-progress-text { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: var(--mist); font-weight: 500; }
+  .quiz-module-badge { position: absolute; top: 12px; right: 12px; padding: 3px 8px; border-radius: 100px; font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+  .quiz-module-badge.done { background: var(--green-pale); color: var(--green-dark); }
+  .quiz-module-badge.lock { background: var(--cloud); color: var(--mist); }
+  .quiz-module-badge.new { background: var(--purple-pale); color: #5b21b6; }
+  .streak-bar { display: flex; gap: 8px; margin-top: 8px; }
+  .streak-day { flex: 1; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; font-weight: 700; }
+  .streak-day.done { background: linear-gradient(135deg, #7c3aed, #a78bfa); color: var(--white); }
+  .streak-day.today { background: var(--gold); color: var(--white); box-shadow: 0 0 10px rgba(245,158,11,0.4); }
+  .streak-day.empty { background: var(--cloud); color: var(--mist); }
+  .split-visual-power { display: flex; border-radius: var(--radius-sm); overflow: hidden; margin-bottom: 24px; height: 56px; font-weight: 700; font-size: 0.88rem; }
+  .split-power-user { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; display: flex; align-items: center; justify-content: center; gap: 8px; flex: 0 0 75%; }
+  .split-power-panel { background: var(--blue); color: white; display: flex; align-items: center; justify-content: center; gap: 8px; flex: 0 0 25%; }
+
   @keyframes fadeSlideDown { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  @keyframes shimmer { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
 
   @media (max-width: 680px) {
     .hero { padding: 72px 24px 56px; }
@@ -609,6 +656,7 @@
   <a href="#notification" title="Notifications"></a>
   <a href="#public-results" title="Public Results"></a>
   <a href="#quality" title="Quality Assurance"></a>
+  <a href="#civic-academy" title="Civic Academy"></a>
   <a href="#platform" title="The Platform"></a>
   <a href="#app-preview" title="App Preview"></a>
   <a href="#ai-proof" title="AI-Proof"></a>
@@ -920,7 +968,7 @@
         </div>
         <div class="notif-content">
           <strong>💰 Secured Bounty: $10.00</strong>
-          CNN has fully funded a priority poll for Verified VA Residents. 1,000 spots remaining. Tap to claim yours.
+          A verified sponsor has fully funded a priority poll for Verified VA Residents. Tap to claim your spot. Sponsor revealed when poll closes.
         </div>
       </div>
     </div>
@@ -958,10 +1006,28 @@
   <!-- 10. QUALITY ASSURANCE -->
   <section id="quality">
     <div class="section-label">10 — Data Integrity</div>
-    <h2 class="section-title">The "Paraphrase Gate"<br>Bot-Killer Engine</h2>
+    <h2 class="section-title">Two Layers of Defense<br>Against Biased Data</h2>
     <p class="section-desc">
-      The #1 problem in digital polling: respondents clicking without reading. Panel enforces a cognitive checkpoint before every vote to guarantee data integrity.
+      Panel attacks data quality from both ends: we stop lazy responses with the Paraphrase Gate, and we eliminate sponsor bias by keeping poll funders anonymous until the results are in.
     </p>
+
+    <div class="callout callout-amber" style="margin-bottom:28px;">
+      <h4>🕵️&ensp;Blind Sponsorship: You Don't Know Who's Asking</h4>
+      When a panelist receives a poll, they see the question, the bounty, and the demographic targeting — but <strong>not the sponsor</strong>. The funding organization is revealed only after the poll closes and results are published. This eliminates one of the most insidious forms of response bias in modern polling: the tendency for respondents to adjust their answers based on who they think is asking. A CNN-commissioned poll and a FOX News-commissioned poll on identical questions routinely produce different results — not because opinion differs, but because people calibrate their responses to the perceived audience. Panel makes that impossible by design. The sponsor sees honest answers. The public sees authentic data.
+    </div>
+
+    <div class="card" style="display:grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom:28px;">
+      <div>
+        <h4 style="font-size:1rem; font-weight:700; color:var(--ink); margin-bottom:8px;">👤&ensp;What Panelists See (During)</h4>
+        <p style="font-size:0.88rem; color:var(--slate); line-height:1.65;">A verified sponsor has placed a bounty. The question. The amount. The deadline. Nothing else. No logo, no outlet name, no hint of political leaning.</p>
+      </div>
+      <div>
+        <h4 style="font-size:1rem; font-weight:700; color:var(--ink); margin-bottom:8px;">📢&ensp;What Everyone Sees (After)</h4>
+        <p style="font-size:0.88rem; color:var(--slate); line-height:1.65;">Once the poll closes, the sponsor is revealed alongside the final results — publicly archived, fully transparent. Sponsors get honest data. The public gets accountability.</p>
+      </div>
+    </div>
+
+    <div style="font-family:'JetBrains Mono',monospace; font-size:0.62rem; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--mist); margin-bottom:12px;">The Paraphrase Gate — Reading Comprehension Enforcement</div>
     <div class="qa-flow">
       <div class="qa-step"><div class="qa-num">1</div><div><div class="qa-step-title">Read the Question</div><div class="qa-step-desc">The panelist reads the full policy question on screen. Vote buttons are intentionally hidden at this stage.</div></div></div>
       <div class="qa-step"><div class="qa-num">2</div><div><div class="qa-step-title">Paraphrase Gate</div><div class="qa-step-desc">On a separate screen, the user types a brief summary of what they just read. Our AI engine validates semantic meaning — gibberish or copy-paste attempts are rejected.</div></div></div>
@@ -971,7 +1037,245 @@
 
   <hr class="divider">
 
-  <!-- 10. BEYOND POLLING — THE CIVIC PLATFORM -->
+  <!-- 11. CIVIC ACADEMY -->
+  <section id="civic-academy">
+    <div class="section-label">11 — Power User Engine</div>
+    <h2 class="section-title">Civic Academy:<br>Get Smarter, Earn More.</h2>
+    <p class="section-desc">
+      Panel gamifies civics education the same way Duolingo gamifies language learning — daily lessons, streaks, XP, and milestone unlocks. The curriculum spans US Government, US&nbsp;&amp;&nbsp;World History, landmark Supreme Court cases, and custom courses published by the Panel team as events demand. Users who complete enough of the curriculum earn <strong>Power User</strong> status and keep 75% of every poll bounty instead of the standard 50%. The result: a platform that actively builds a more informed citizenry — and a respondent pool that no other polling outlet can come close to matching.
+    </p>
+
+    <div class="academy-hero">
+      <div class="academy-hero-inner">
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:0.62rem; font-weight:600; letter-spacing:3px; text-transform:uppercase; color:var(--purple-glow); margin-bottom:12px;">🎓 Civic Academy</div>
+          <h3>Learn. Level Up. Earn More.</h3>
+          <p>Short, daily lessons on US history, the Constitution, how Congress works, the budget process, and more — each capped at 5 minutes, bite-sized like a Duolingo session. Complete enough modules to unlock Power User status and permanently increase your share of every poll bounty from 50% to 75%.</p>
+          <div class="xp-track" style="margin-top:24px;">
+            <div class="xp-row">
+              <span class="xp-label">Power User Progress</span>
+              <span class="xp-count">34 / 50 modules</span>
+            </div>
+            <div class="xp-bar-rail"><div class="xp-bar-fill" style="width:68%;"></div></div>
+            <div style="font-family:'JetBrains Mono',monospace; font-size:0.62rem; color:rgba(255,255,255,0.4); margin-top:6px;">16 modules remaining to unlock Power User status</div>
+          </div>
+          <div style="margin-top:20px;">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:0.62rem; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.4); margin-bottom:8px;">🔥 This Week's Streak</div>
+            <div class="streak-bar">
+              <div class="streak-day done">M</div>
+              <div class="streak-day done">T</div>
+              <div class="streak-day done">W</div>
+              <div class="streak-day done">T</div>
+              <div class="streak-day today">F</div>
+              <div class="streak-day empty">S</div>
+              <div class="streak-day empty">S</div>
+            </div>
+          </div>
+        </div>
+        <div class="power-badge">
+          <span class="power-badge-icon">⚡</span>
+          <div class="power-badge-label">Power User</div>
+          <div class="power-badge-title">Status</div>
+          <div class="power-badge-split">75%</div>
+          <div class="power-badge-split-sub">of every bounty</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="font-family:'JetBrains Mono',monospace; font-size:0.62rem; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--mist); margin-bottom:10px; margin-top:28px;">🏛️ US Government Track</div>
+    <div class="quiz-module-grid" style="margin-top:0;">
+      <div class="quiz-module completed">
+        <span class="quiz-module-badge done">✓ Done</span>
+        <span class="quiz-module-icon">📜</span>
+        <div class="quiz-module-title">The Constitution</div>
+        <div class="quiz-module-meta">Articles, amendments, separation of powers, and the Bill of Rights.</div>
+        <div class="quiz-module-progress">
+          <div class="quiz-module-progress-rail"><div class="quiz-module-progress-fill green" style="width:100%;"></div></div>
+          <div class="quiz-progress-text">10 / 10 lessons complete</div>
+        </div>
+      </div>
+      <div class="quiz-module completed">
+        <span class="quiz-module-badge done">✓ Done</span>
+        <span class="quiz-module-icon">🏛️</span>
+        <div class="quiz-module-title">How Congress Works</div>
+        <div class="quiz-module-meta">The legislative process, committee system, how a bill becomes law.</div>
+        <div class="quiz-module-progress">
+          <div class="quiz-module-progress-rail"><div class="quiz-module-progress-fill green" style="width:100%;"></div></div>
+          <div class="quiz-progress-text">8 / 8 lessons complete</div>
+        </div>
+      </div>
+      <div class="quiz-module">
+        <span class="quiz-module-badge new">In Progress</span>
+        <span class="quiz-module-icon">⚖️</span>
+        <div class="quiz-module-title">The Federal Budget</div>
+        <div class="quiz-module-meta">Discretionary vs. mandatory spending, the debt ceiling, continuing resolutions.</div>
+        <div class="quiz-module-progress">
+          <div class="quiz-module-progress-rail"><div class="quiz-module-progress-fill purple" style="width:60%;"></div></div>
+          <div class="quiz-progress-text">6 / 10 lessons complete</div>
+        </div>
+      </div>
+      <div class="quiz-module">
+        <span class="quiz-module-badge new">Unlocked</span>
+        <span class="quiz-module-icon">🗳️</span>
+        <div class="quiz-module-title">Elections &amp; Voting</div>
+        <div class="quiz-module-meta">Electoral College, primaries, redistricting, campaign finance basics.</div>
+        <div class="quiz-module-progress">
+          <div class="quiz-module-progress-rail"><div class="quiz-module-progress-fill amber" style="width:20%;"></div></div>
+          <div class="quiz-progress-text">2 / 10 lessons complete</div>
+        </div>
+      </div>
+      <div class="quiz-module locked">
+        <span class="quiz-module-badge lock">🔒 Locked</span>
+        <span class="quiz-module-icon">🌍</span>
+        <div class="quiz-module-title">Foreign Policy &amp; Treaties</div>
+        <div class="quiz-module-meta">How the US engages internationally — NATO, trade agreements, executive agreements.</div>
+        <div class="quiz-module-progress">
+          <div class="quiz-module-progress-rail"><div class="quiz-module-progress-fill purple" style="width:0%;"></div></div>
+          <div class="quiz-progress-text">Complete "Elections" to unlock</div>
+        </div>
+      </div>
+      <div class="quiz-module locked">
+        <span class="quiz-module-badge lock">🔒 Locked</span>
+        <span class="quiz-module-icon">🏦</span>
+        <div class="quiz-module-title">The Federal Reserve</div>
+        <div class="quiz-module-meta">Monetary policy, interest rates, inflation — how the Fed shapes the economy.</div>
+        <div class="quiz-module-progress">
+          <div class="quiz-module-progress-rail"><div class="quiz-module-progress-fill purple" style="width:0%;"></div></div>
+          <div class="quiz-progress-text">Complete "Federal Budget" to unlock</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="font-family:'JetBrains Mono',monospace; font-size:0.62rem; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--mist); margin-bottom:10px; margin-top:28px;">🗽 US History Track</div>
+    <div class="quiz-module-grid" style="margin-top:0;">
+      <div class="quiz-module completed">
+        <span class="quiz-module-badge done">✓ Done</span>
+        <span class="quiz-module-icon">⚓</span>
+        <div class="quiz-module-title">Founding &amp; Revolution</div>
+        <div class="quiz-module-meta">Colonial America, the Revolution, Articles of Confederation, and the founding of the Republic.</div>
+        <div class="quiz-module-progress">
+          <div class="quiz-module-progress-rail"><div class="quiz-module-progress-fill green" style="width:100%;"></div></div>
+          <div class="quiz-progress-text">10 / 10 lessons complete</div>
+        </div>
+      </div>
+      <div class="quiz-module">
+        <span class="quiz-module-badge new">In Progress</span>
+        <span class="quiz-module-icon">⚔️</span>
+        <div class="quiz-module-title">Civil War &amp; Reconstruction</div>
+        <div class="quiz-module-meta">Slavery, secession, battles, emancipation, and the unfinished project of Reconstruction.</div>
+        <div class="quiz-module-progress">
+          <div class="quiz-module-progress-rail"><div class="quiz-module-progress-fill purple" style="width:40%;"></div></div>
+          <div class="quiz-progress-text">4 / 10 lessons complete</div>
+        </div>
+      </div>
+      <div class="quiz-module locked">
+        <span class="quiz-module-badge lock">🔒 Locked</span>
+        <span class="quiz-module-icon">🌐</span>
+        <div class="quiz-module-title">World Wars &amp; the 20th Century</div>
+        <div class="quiz-module-meta">WWI, WWII, the Cold War, the civil rights movement, and America's rise as a global superpower.</div>
+        <div class="quiz-module-progress">
+          <div class="quiz-module-progress-rail"><div class="quiz-module-progress-fill purple" style="width:0%;"></div></div>
+          <div class="quiz-progress-text">Complete "Civil War" to unlock</div>
+        </div>
+      </div>
+      <div class="quiz-module locked">
+        <span class="quiz-module-badge lock">🔒 Locked</span>
+        <span class="quiz-module-icon">🚀</span>
+        <div class="quiz-module-title">Modern America (1980–Today)</div>
+        <div class="quiz-module-meta">Reaganomics, 9/11, the War on Terror, financial crises, and the technology revolution.</div>
+        <div class="quiz-module-progress">
+          <div class="quiz-module-progress-rail"><div class="quiz-module-progress-fill purple" style="width:0%;"></div></div>
+          <div class="quiz-progress-text">Complete "World Wars" to unlock</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="font-family:'JetBrains Mono',monospace; font-size:0.62rem; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--mist); margin-bottom:10px; margin-top:28px;">⚖️ Supreme Court Track</div>
+    <div class="quiz-module-grid" style="margin-top:0;">
+      <div class="quiz-module completed">
+        <span class="quiz-module-badge done">✓ Done</span>
+        <span class="quiz-module-icon">🏫</span>
+        <div class="quiz-module-title">Brown v. Board of Education</div>
+        <div class="quiz-module-meta">How a unanimous 1954 ruling ended legal school segregation and reshaped civil rights law.</div>
+        <div class="quiz-module-progress">
+          <div class="quiz-module-progress-rail"><div class="quiz-module-progress-fill green" style="width:100%;"></div></div>
+          <div class="quiz-progress-text">5 / 5 lessons complete</div>
+        </div>
+      </div>
+      <div class="quiz-module">
+        <span class="quiz-module-badge new">Unlocked</span>
+        <span class="quiz-module-icon">📺</span>
+        <div class="quiz-module-title">Marbury v. Madison</div>
+        <div class="quiz-module-meta">The 1803 case that established judicial review — the Court's power to strike down unconstitutional laws.</div>
+        <div class="quiz-module-progress">
+          <div class="quiz-module-progress-rail"><div class="quiz-module-progress-fill amber" style="width:0%;"></div></div>
+          <div class="quiz-progress-text">0 / 5 lessons complete</div>
+        </div>
+      </div>
+      <div class="quiz-module locked">
+        <span class="quiz-module-badge lock">🔒 Locked</span>
+        <span class="quiz-module-icon">💰</span>
+        <div class="quiz-module-title">Citizens United v. FEC</div>
+        <div class="quiz-module-meta">The 2010 ruling on campaign finance, corporate personhood, and the concept of money as political speech.</div>
+        <div class="quiz-module-progress">
+          <div class="quiz-module-progress-rail"><div class="quiz-module-progress-fill purple" style="width:0%;"></div></div>
+          <div class="quiz-progress-text">Complete "Marbury" to unlock</div>
+        </div>
+      </div>
+      <div class="quiz-module locked">
+        <span class="quiz-module-badge lock">🔒 Locked</span>
+        <span class="quiz-module-icon">🗺️</span>
+        <div class="quiz-module-title">Rucho v. Common Cause</div>
+        <div class="quiz-module-meta">The 2019 ruling that partisan gerrymandering is a political question beyond federal court reach.</div>
+        <div class="quiz-module-progress">
+          <div class="quiz-module-progress-rail"><div class="quiz-module-progress-fill purple" style="width:0%;"></div></div>
+          <div class="quiz-progress-text">Complete "Citizens United" to unlock</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="font-family:'JetBrains Mono',monospace; font-size:0.62rem; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--mist); margin-bottom:10px; margin-top:28px;">⭐ Panel Custom Courses</div>
+    <div class="quiz-module-grid" style="margin-top:0;">
+      <div class="quiz-module" style="border-color: var(--purple-pale); background: rgba(124,58,237,0.02);">
+        <span class="quiz-module-badge new">New</span>
+        <span class="quiz-module-icon">🤖</span>
+        <div class="quiz-module-title">AI &amp; the Future of Work</div>
+        <div class="quiz-module-meta">A Panel-published course on automation, AI policy, job displacement, and the legislative landscape around emerging technology.</div>
+        <div class="quiz-module-progress">
+          <div class="quiz-module-progress-rail"><div class="quiz-module-progress-fill purple" style="width:0%;"></div></div>
+          <div class="quiz-progress-text">0 / 6 lessons · Published by Panel</div>
+        </div>
+      </div>
+      <div class="quiz-module" style="border-style: dashed; background: var(--snow); opacity:0.7;">
+        <span class="quiz-module-icon">✏️</span>
+        <div class="quiz-module-title">More Coming Soon</div>
+        <div class="quiz-module-meta">Panel publishes timely custom courses as major policy events unfold — debt ceiling negotiations, landmark legislation, election cycles, and more.</div>
+        <div class="quiz-module-progress">
+          <div class="quiz-module-progress-rail"><div class="quiz-module-progress-fill purple" style="width:0%;"></div></div>
+          <div class="quiz-progress-text">Courses added as events demand</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-blue" style="margin-top:28px;">
+      <h4>📊&ensp;Why This Makes Our Data Better</h4>
+      A traditional polling panel is just a pool of warm bodies. Panel's Power Users are verified citizens who have actively demonstrated knowledge of the government processes they're being asked about. When a pollster asks a question about Federal Reserve policy, the responses from Panel's Power User cohort carry a credibility that no other polling outfit can offer — and pollsters can filter for Power Users specifically, commanding higher bid prices for their responses.
+    </div>
+
+    <div class="callout callout-green" style="margin-top:12px;">
+      <h4>🔥&ensp;The Engagement Flywheel</h4>
+      Streaks, XP bars, and milestone unlocks aren't gimmicks — they're proven engagement mechanics. Duolingo has demonstrated that gamification can sustain daily active use for language learning, one of the hardest habits to maintain. Civics is easier: shorter sessions, directly actionable knowledge, and a concrete financial reward at the finish line. Users who are working toward Power User status open the app daily. That means more poll responses per panelist, faster fill times for sponsors, and a compounding network effect as the educated cohort grows.
+    </div>
+
+    <div class="callout callout-amber" style="margin-top:12px;">
+      <h4>⚡&ensp;The 75% Split — A Sustainable Incentive</h4>
+      At the standard 50/50 split, Panel's margin funds the entire civic transparency platform with zero ads. The Power User tier reduces Panel's cut to 25% on those respondents — but this is intentional and sustainable. Power Users respond faster, pass the Paraphrase Gate at higher rates, and attract premium poll bids. A poll filled with Power Users is worth more to a sponsor than a general-population poll. Panel can charge accordingly, keeping the economics healthy even with the elevated payout.
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 12. BEYOND POLLING — THE CIVIC PLATFORM -->
   <section id="platform">
     <div class="section-label">11 — Beyond Polling</div>
     <h2 class="section-title">A Full Civic<br>Transparency Platform</h2>
@@ -1050,7 +1354,7 @@
               <div class="gate-dot"></div>
             </div>
             <div class="gate-step-label">Step 1 of 3 — Read Carefully</div>
-            <div style="font-size:0.62rem; font-weight:600; color:var(--mist); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px;">CNN · National Poll</div>
+            <div style="font-size:0.62rem; font-weight:600; color:var(--mist); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px;">Verified Sponsor · National Poll</div>
             <div class="gate-question-box">
               "The Federal Reserve has proposed raising interest rates by 0.5% to combat inflation, which economists predict could slow GDP growth by 1.2% over the next fiscal year. Do you support this policy?"
             </div>
@@ -1146,19 +1450,19 @@
           </div>
           <div class="screen-content">
             <div class="mini-poll">
-              <div class="mini-poll-sponsor">CNN · National</div>
+              <div class="mini-poll-sponsor">Verified Sponsor · National</div>
               <div class="mini-poll-q">Do you approve of the President's handling of the economy?</div>
               <div class="mini-poll-bounty">💰 $8.00 Secured</div>
               <div class="mini-poll-meta">847 of 1,000 spots remaining · Expires in 4h</div>
             </div>
             <div class="mini-poll">
-              <div class="mini-poll-sponsor">AP News · National</div>
+              <div class="mini-poll-sponsor">Verified Sponsor · National</div>
               <div class="mini-poll-q">Should the US increase funding for public transportation?</div>
               <div class="mini-poll-bounty">💰 $5.00 Secured</div>
               <div class="mini-poll-meta">312 of 500 spots remaining · Expires in 2h</div>
             </div>
             <div class="mini-poll" style="opacity:0.5;">
-              <div class="mini-poll-sponsor">NBC4 · Virginia Only</div>
+              <div class="mini-poll-sponsor">Verified Sponsor · Virginia Only</div>
               <div class="mini-poll-q">Do you support the proposed I-66 toll increase?</div>
               <div class="mini-poll-bounty">💰 $10.00 Secured</div>
               <div class="mini-poll-meta">🔒 Requires Level 2 (Driver's License)</div>
@@ -1370,6 +1674,316 @@
         </div>
       </div>
 
+      <!-- ─── CIVIC ACADEMY GAMIFICATION SCREENS ─── -->
+      <div class="phone-showcase-label">Civic Academy — Gamification &amp; Power User Flow</div>
+
+      <!-- ACADEMY PHONE 1: Academy Home -->
+      <div class="phone-frame">
+        <div class="phone-speaker"></div>
+        <div class="phone-screen">
+          <div class="phone-status-bar"><span>9:41</span><div class="phone-status-icons">■■■ ▶ ⚡</div></div>
+          <div style="background: linear-gradient(135deg,#0c1220,#1e1b4b); padding:12px 18px 10px;">
+            <div style="font-size:0.58rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#a78bfa; margin-bottom:3px;">Civic Academy</div>
+            <div style="font-size:0.95rem; font-weight:700; color:white;">Learn. Level Up. Earn More.</div>
+          </div>
+          <div class="screen-content" style="flex:1; padding:10px 12px; background:#f8fafc;">
+            <div style="background:white; border:1px solid var(--cloud); border-radius:10px; padding:10px; margin-bottom:8px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:7px;">
+                <div style="font-weight:700; font-size:0.72rem; color:var(--ink);">🔥 5-Day Streak!</div>
+                <div style="font-family:monospace; font-size:0.62rem; font-weight:700; color:#f59e0b;">+50 XP</div>
+              </div>
+              <div style="display:flex; gap:4px;">
+                <div style="flex:1; height:20px; background:linear-gradient(135deg,#7c3aed,#a78bfa); border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:0.5rem; font-weight:700; color:white;">M</div>
+                <div style="flex:1; height:20px; background:linear-gradient(135deg,#7c3aed,#a78bfa); border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:0.5rem; font-weight:700; color:white;">T</div>
+                <div style="flex:1; height:20px; background:linear-gradient(135deg,#7c3aed,#a78bfa); border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:0.5rem; font-weight:700; color:white;">W</div>
+                <div style="flex:1; height:20px; background:linear-gradient(135deg,#7c3aed,#a78bfa); border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:0.5rem; font-weight:700; color:white;">T</div>
+                <div style="flex:1; height:20px; background:#f59e0b; border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:0.5rem; font-weight:700; color:white; box-shadow:0 0 5px rgba(245,158,11,.5);">F</div>
+                <div style="flex:1; height:20px; background:var(--cloud); border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:0.5rem; color:var(--mist);">S</div>
+                <div style="flex:1; height:20px; background:var(--cloud); border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:0.5rem; color:var(--mist);">S</div>
+              </div>
+            </div>
+            <div style="background:white; border:1px solid var(--cloud); border-radius:10px; padding:10px; margin-bottom:8px;">
+              <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
+                <div style="font-weight:700; font-size:0.7rem; color:var(--ink);">Power User Progress</div>
+                <div style="font-family:monospace; font-size:0.62rem; font-weight:700; color:#7c3aed;">34/50</div>
+              </div>
+              <div style="background:var(--cloud); border-radius:100px; height:6px; overflow:hidden; margin-bottom:3px;"><div style="background:linear-gradient(90deg,#7c3aed,#a78bfa); width:68%; height:100%; border-radius:100px;"></div></div>
+              <div style="font-size:0.56rem; color:var(--mist);">16 modules to unlock 75% bounty split ⚡</div>
+            </div>
+            <div style="font-size:0.58rem; font-weight:700; color:var(--mist); text-transform:uppercase; letter-spacing:1px; margin-bottom:5px;">Up Next</div>
+            <div style="background:white; border:2px solid #7c3aed; border-radius:10px; padding:10px;">
+              <div style="display:flex; gap:7px; align-items:center; margin-bottom:7px;">
+                <div style="font-size:1.2rem;">⚖️</div>
+                <div>
+                  <div style="font-weight:700; font-size:0.7rem; color:var(--ink);">The Federal Budget</div>
+                  <div style="font-size:0.58rem; color:var(--slate);">Lesson 7 of 10 · ~4 min</div>
+                </div>
+              </div>
+              <div style="background:linear-gradient(135deg,#7c3aed,#a78bfa); border-radius:7px; padding:7px; text-align:center; font-size:0.65rem; font-weight:700; color:white;">Start Today's Lesson →</div>
+            </div>
+          </div>
+          <div class="screen-nav">
+            <div class="screen-nav-item"><div class="screen-nav-icon">📊</div>Polls</div>
+            <div class="screen-nav-item active" style="color:#7c3aed;"><div class="screen-nav-icon">🎓</div>Academy</div>
+            <div class="screen-nav-item"><div class="screen-nav-icon">🔔</div>Alerts</div>
+            <div class="screen-nav-item"><div class="screen-nav-icon">👤</div>Profile</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACADEMY PHONE 2: Active Quiz -->
+      <div class="phone-frame">
+        <div class="phone-speaker"></div>
+        <div class="phone-screen">
+          <div class="phone-status-bar"><span>9:41</span><div class="phone-status-icons">■■■ ▶ ⚡</div></div>
+          <div style="background:linear-gradient(135deg,#0c1220,#1e1b4b); padding:9px 18px 8px; display:flex; justify-content:space-between; align-items:center;">
+            <div style="font-size:0.58rem; font-weight:700; color:#a78bfa; letter-spacing:1px; text-transform:uppercase;">The Federal Budget</div>
+            <div style="font-family:monospace; font-size:0.62rem; font-weight:700; color:#f59e0b;">+20 XP</div>
+          </div>
+          <div class="screen-content" style="flex:1; display:flex; flex-direction:column; background:#f8fafc;">
+            <div style="display:flex; gap:3px; margin-bottom:10px;">
+              <div style="flex:1; height:4px; background:#7c3aed; border-radius:2px;"></div>
+              <div style="flex:1; height:4px; background:#7c3aed; border-radius:2px;"></div>
+              <div style="flex:1; height:4px; background:#7c3aed; border-radius:2px;"></div>
+              <div style="flex:1; height:4px; background:#a78bfa; border-radius:2px;"></div>
+              <div style="flex:1; height:4px; background:var(--cloud); border-radius:2px;"></div>
+              <div style="flex:1; height:4px; background:var(--cloud); border-radius:2px;"></div>
+              <div style="flex:1; height:4px; background:var(--cloud); border-radius:2px;"></div>
+            </div>
+            <div style="font-size:0.58rem; font-weight:600; color:var(--mist); text-transform:uppercase; letter-spacing:1px; margin-bottom:7px;">Question 4 of 7</div>
+            <div style="background:white; border:1px solid var(--cloud); border-radius:9px; padding:11px; font-size:0.76rem; font-weight:600; color:var(--ink); line-height:1.5; margin-bottom:10px;">
+              Which spending category is considered "mandatory" and NOT subject to annual appropriations?
+            </div>
+            <div style="display:flex; flex-direction:column; gap:6px;">
+              <div style="background:var(--green-pale); border:2px solid var(--green); border-radius:7px; padding:8px 10px; font-size:0.7rem; font-weight:700; color:var(--green-dark);">A. Social Security payments ✓</div>
+              <div style="background:white; border:1px solid var(--cloud); border-radius:7px; padding:8px 10px; font-size:0.7rem; color:var(--slate);">B. Defense Department salaries</div>
+              <div style="background:white; border:1px solid var(--cloud); border-radius:7px; padding:8px 10px; font-size:0.7rem; color:var(--slate);">C. National Park operations</div>
+              <div style="background:white; border:1px solid var(--cloud); border-radius:7px; padding:8px 10px; font-size:0.7rem; color:var(--slate);">D. NASA research grants</div>
+            </div>
+            <div style="flex:1;"></div>
+            <div style="background:var(--green); border-radius:7px; padding:8px; text-align:center; font-size:0.7rem; font-weight:700; color:white; margin-top:10px;">Correct! +20 XP — Next Question →</div>
+          </div>
+          <div class="screen-nav">
+            <div class="screen-nav-item"><div class="screen-nav-icon">📊</div>Polls</div>
+            <div class="screen-nav-item active" style="color:#7c3aed;"><div class="screen-nav-icon">🎓</div>Academy</div>
+            <div class="screen-nav-item"><div class="screen-nav-icon">🔔</div>Alerts</div>
+            <div class="screen-nav-item"><div class="screen-nav-icon">👤</div>Profile</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACADEMY PHONE 3: Power User Unlock -->
+      <div class="phone-frame">
+        <div class="phone-speaker"></div>
+        <div class="phone-screen">
+          <div class="phone-status-bar" style="background:#0c1220; color:rgba(255,255,255,0.6);"><span>9:41</span><div class="phone-status-icons">■■■ ▶ ⚡</div></div>
+          <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; background:linear-gradient(160deg,#0c1220 0%,#1e1b4b 60%,#0c1220 100%); padding:20px;">
+            <div style="font-size:2.8rem; margin-bottom:10px; filter:drop-shadow(0 0 14px rgba(245,158,11,.6));">&#x26A1;</div>
+            <div style="font-family:monospace; font-size:0.55rem; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:#a78bfa; margin-bottom:6px;">Achievement Unlocked</div>
+            <div style="font-size:1.3rem; font-weight:800; color:white; text-align:center; margin-bottom:5px;">Power User</div>
+            <div style="font-size:0.67rem; color:rgba(255,255,255,0.55); text-align:center; line-height:1.55; margin-bottom:14px;">You've completed 50 Civic Academy modules. Your bounty split just increased permanently.</div>
+            <div style="background:linear-gradient(135deg,#f59e0b,#d97706); border-radius:12px; padding:12px 18px; text-align:center; width:100%; margin-bottom:12px;">
+              <div style="font-size:0.55rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.7); margin-bottom:1px;">Your new earnings rate</div>
+              <div style="font-family:monospace; font-size:1.9rem; font-weight:800; color:white;">75%</div>
+              <div style="font-size:0.6rem; color:rgba(255,255,255,0.7);">of every poll bounty, forever</div>
+            </div>
+            <div style="display:flex; gap:6px; width:100%;">
+              <div style="flex:1; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.1); border-radius:7px; padding:7px; text-align:center;">
+                <div style="font-size:0.55rem; color:rgba(255,255,255,0.45);">Modules</div>
+                <div style="font-family:monospace; font-size:0.9rem; font-weight:800; color:white;">50</div>
+              </div>
+              <div style="flex:1; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.1); border-radius:7px; padding:7px; text-align:center;">
+                <div style="font-size:0.55rem; color:rgba(255,255,255,0.45);">XP Earned</div>
+                <div style="font-family:monospace; font-size:0.9rem; font-weight:800; color:white;">2,840</div>
+              </div>
+              <div style="flex:1; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.1); border-radius:7px; padding:7px; text-align:center;">
+                <div style="font-size:0.55rem; color:rgba(255,255,255,0.45);">Best Streak</div>
+                <div style="font-family:monospace; font-size:0.9rem; font-weight:800; color:white;">14d</div>
+              </div>
+            </div>
+          </div>
+          <div class="screen-nav" style="background:#111827; border-top:1px solid rgba(255,255,255,0.07);">
+            <div class="screen-nav-item" style="color:rgba(255,255,255,0.35);"><div class="screen-nav-icon">📊</div>Polls</div>
+            <div class="screen-nav-item" style="color:#a78bfa;"><div class="screen-nav-icon">🎓</div>Academy</div>
+            <div class="screen-nav-item" style="color:rgba(255,255,255,0.35);"><div class="screen-nav-icon">🔔</div>Alerts</div>
+            <div class="screen-nav-item" style="color:rgba(255,255,255,0.35);"><div class="screen-nav-icon">👤</div>Profile</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACADEMY PHONE 4: Profile with streak alert -->
+      <div class="phone-frame">
+        <div class="phone-speaker"></div>
+        <div class="phone-screen">
+          <div class="phone-status-bar"><span>9:41</span><div class="phone-status-icons">■■■ ▶ ⚡</div></div>
+          <div class="screen-header" style="font-size:1rem;">My Profile</div>
+          <div class="screen-content" style="flex:1; background:#f8fafc; padding:10px 12px;">
+            <div style="background:linear-gradient(135deg,#f59e0b,#d97706); border-radius:9px; padding:9px 12px; display:flex; align-items:center; gap:9px; margin-bottom:8px;">
+              <div style="font-size:1.4rem;">⚡</div>
+              <div style="flex:1;">
+                <div style="font-size:0.56rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.7);">Status</div>
+                <div style="font-weight:800; font-size:0.85rem; color:white;">Power User</div>
+              </div>
+              <div style="font-family:monospace; font-size:1.15rem; font-weight:800; color:white;">75%</div>
+            </div>
+            <div style="background:#fff7ed; border:1px solid #fed7aa; border-radius:9px; padding:9px 11px; display:flex; align-items:center; gap:7px; margin-bottom:8px;">
+              <div style="font-size:1rem;">🔥</div>
+              <div>
+                <div style="font-size:0.68rem; font-weight:700; color:#92400e;">Don't break your streak!</div>
+                <div style="font-size:0.58rem; color:#b45309;">Complete today's lesson to keep your 14-day streak alive. 9 hrs left.</div>
+              </div>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:8px;">
+              <div style="background:white; border:1px solid var(--cloud); border-radius:7px; padding:8px; text-align:center;">
+                <div style="font-size:0.56rem; color:var(--mist); text-transform:uppercase; letter-spacing:1px;">Total Earned</div>
+                <div style="font-family:monospace; font-size:0.95rem; font-weight:800; color:var(--green-dark);">$347.50</div>
+              </div>
+              <div style="background:white; border:1px solid var(--cloud); border-radius:7px; padding:8px; text-align:center;">
+                <div style="font-size:0.56rem; color:var(--mist); text-transform:uppercase; letter-spacing:1px;">Polls Taken</div>
+                <div style="font-family:monospace; font-size:0.95rem; font-weight:800; color:var(--ink);">89</div>
+              </div>
+              <div style="background:white; border:1px solid var(--cloud); border-radius:7px; padding:8px; text-align:center;">
+                <div style="font-size:0.56rem; color:var(--mist); text-transform:uppercase; letter-spacing:1px;">Academy XP</div>
+                <div style="font-family:monospace; font-size:0.95rem; font-weight:800; color:#7c3aed;">2,840</div>
+              </div>
+              <div style="background:white; border:1px solid var(--cloud); border-radius:7px; padding:8px; text-align:center;">
+                <div style="font-size:0.56rem; color:var(--mist); text-transform:uppercase; letter-spacing:1px;">Best Streak</div>
+                <div style="font-family:monospace; font-size:0.95rem; font-weight:800; color:#f59e0b;">14d 🔥</div>
+              </div>
+            </div>
+            <div style="font-size:0.58rem; font-weight:700; color:var(--mist); text-transform:uppercase; letter-spacing:1px; margin-bottom:5px;">Verifications</div>
+            <div style="display:flex; gap:5px;">
+              <div style="background:var(--blue-pale); color:var(--blue-deep); border-radius:5px; padding:4px 7px; font-size:0.56rem; font-weight:700;">🛂 Passport</div>
+              <div style="background:var(--green-pale); color:var(--green-dark); border-radius:5px; padding:4px 7px; font-size:0.56rem; font-weight:700;">🏠 Resident</div>
+              <div style="background:linear-gradient(135deg,#fef3c7,#fde68a); color:#92400e; border-radius:5px; padding:4px 7px; font-size:0.56rem; font-weight:700;">⚡ Power User</div>
+            </div>
+          </div>
+          <div class="screen-nav">
+            <div class="screen-nav-item"><div class="screen-nav-icon">📊</div>Polls</div>
+            <div class="screen-nav-item"><div class="screen-nav-icon">🎓</div>Academy</div>
+            <div class="screen-nav-item"><div class="screen-nav-icon">🔔</div>Alerts</div>
+            <div class="screen-nav-item active"><div class="screen-nav-icon">👤</div>Profile</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── SPONSOR / POLLSTER DASHBOARD ─── -->
+      <div class="phone-showcase-label">Pollster Dashboard — What Sponsors See</div>
+
+      <!-- SPONSOR PHONE 1: Create a Poll -->
+      <div class="phone-frame">
+        <div class="phone-speaker"></div>
+        <div class="phone-screen">
+          <div class="phone-status-bar"><span>9:41</span><div class="phone-status-icons">■■■ ▶ ⚡</div></div>
+          <div class="screen-header" style="font-size:1rem;">Launch a Poll</div>
+          <div class="screen-content" style="flex:1; background:#f8fafc; padding:10px 12px;">
+            <div style="font-size:0.58rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--mist); margin-bottom:3px;">Target Audience</div>
+            <div style="background:white; border:1px solid var(--cloud); border-radius:7px; padding:8px; margin-bottom:7px; display:flex; justify-content:space-between; align-items:center;">
+              <span style="color:var(--ink); font-weight:600; font-size:0.68rem;">Women · Age 35–55 · Virginia</span>
+              <span style="font-size:0.6rem; color:var(--blue);">Edit</span>
+            </div>
+            <div style="font-size:0.55rem; color:var(--mist); margin-bottom:7px; padding:5px 7px; background:var(--snow); border-radius:5px; border-left:3px solid var(--blue); line-height:1.4;">🎲 Respondents are randomly selected from your eligible audience by Panel's selection engine. You cannot choose who answers.</div>
+            <div style="font-size:0.58rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--mist); margin-bottom:3px;">Bounty per Response</div>
+            <div style="background:white; border:1px solid var(--cloud); border-radius:7px; padding:7px 8px; margin-bottom:7px; display:flex; justify-content:space-between;">
+              <span style="font-weight:700; color:var(--ink); font-size:0.72rem;">$8.00</span>
+              <span style="font-size:0.6rem; color:var(--mist);">Min $5.00</span>
+            </div>
+            <div style="font-size:0.58rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--mist); margin-bottom:3px;">Sample Size</div>
+            <div style="background:white; border:1px solid var(--cloud); border-radius:7px; padding:7px 8px; margin-bottom:9px; font-weight:700; color:var(--ink); font-size:0.72rem;">1,000 verified responses</div>
+            <div style="background:var(--ink); border-radius:8px; padding:9px; text-align:center; font-size:0.72rem; font-weight:700; color:white;">Fund Escrow: $8,000 → Launch</div>
+          </div>
+          <div class="screen-nav">
+            <div class="screen-nav-item active"><div class="screen-nav-icon">📊</div>Polls</div>
+            <div class="screen-nav-item"><div class="screen-nav-icon">📈</div>Results</div>
+            <div class="screen-nav-item"><div class="screen-nav-icon">💳</div>Billing</div>
+            <div class="screen-nav-item"><div class="screen-nav-icon">⚙️</div>Settings</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SPONSOR PHONE 2: Live Results -->
+      <div class="phone-frame">
+        <div class="phone-speaker"></div>
+        <div class="phone-screen">
+          <div class="phone-status-bar"><span>9:41</span><div class="phone-status-icons">■■■ ▶ ⚡</div></div>
+          <div class="screen-header" style="font-size:0.92rem;">Live Results</div>
+          <div class="screen-content" style="flex:1; background:#f8fafc; padding:10px 12px;">
+            <div style="background:white; border:1px solid var(--cloud); border-radius:9px; padding:10px; margin-bottom:7px;">
+              <div style="font-size:0.58rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--mist); margin-bottom:3px;">Your Poll · Women 35–55 VA</div>
+              <div style="font-size:0.72rem; font-weight:700; color:var(--ink); line-height:1.4; margin-bottom:7px;">"Do you support raising the federal gas tax for infrastructure?"</div>
+              <div style="display:flex; justify-content:space-between; font-size:0.58rem; color:var(--mist); margin-bottom:2px;">
+                <span>Responses</span>
+                <span style="font-weight:700; color:var(--ink);">724 / 1,000</span>
+              </div>
+              <div style="background:var(--cloud); border-radius:100px; height:5px; overflow:hidden; margin-bottom:8px;"><div style="background:var(--blue); width:72%; height:100%; border-radius:100px;"></div></div>
+              <div style="margin-bottom:5px;">
+                <div style="display:flex; justify-content:space-between; font-size:0.62rem; font-weight:600; margin-bottom:2px;"><span style="color:var(--green-dark);">Yes, support</span><span style="color:var(--green-dark);">61%</span></div>
+                <div style="background:var(--cloud); border-radius:100px; height:7px; overflow:hidden;"><div style="background:var(--green); width:61%; height:100%; border-radius:100px;"></div></div>
+              </div>
+              <div style="margin-bottom:5px;">
+                <div style="display:flex; justify-content:space-between; font-size:0.62rem; font-weight:600; margin-bottom:2px;"><span style="color:var(--red);">No, oppose</span><span style="color:var(--red);">29%</span></div>
+                <div style="background:var(--cloud); border-radius:100px; height:7px; overflow:hidden;"><div style="background:var(--red); width:29%; height:100%; border-radius:100px;"></div></div>
+              </div>
+              <div>
+                <div style="display:flex; justify-content:space-between; font-size:0.62rem; font-weight:600; margin-bottom:2px;"><span style="color:var(--amber);">Unsure</span><span style="color:var(--amber);">10%</span></div>
+                <div style="background:var(--cloud); border-radius:100px; height:7px; overflow:hidden;"><div style="background:var(--amber); width:10%; height:100%; border-radius:100px;"></div></div>
+              </div>
+            </div>
+            <div style="background:#fff7ed; border:1px solid #fed7aa; border-radius:7px; padding:7px 9px; font-size:0.58rem; color:#92400e; line-height:1.45;">
+              🔙 Your identity is hidden from panelists until the poll closes at 6:00 PM. Results are currently private.
+            </div>
+          </div>
+          <div class="screen-nav">
+            <div class="screen-nav-item"><div class="screen-nav-icon">📊</div>Polls</div>
+            <div class="screen-nav-item active"><div class="screen-nav-icon">📈</div>Results</div>
+            <div class="screen-nav-item"><div class="screen-nav-icon">💳</div>Billing</div>
+            <div class="screen-nav-item"><div class="screen-nav-icon">⚙️</div>Settings</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SPONSOR PHONE 3: Post-Close, Sponsor Revealed -->
+      <div class="phone-frame">
+        <div class="phone-speaker"></div>
+        <div class="phone-screen">
+          <div class="phone-status-bar"><span>9:41</span><div class="phone-status-icons">■■■ ▶ ⚡</div></div>
+          <div class="screen-header" style="font-size:0.9rem;">Poll Closed — Results Final</div>
+          <div class="screen-content" style="flex:1; background:#f8fafc; padding:10px 12px;">
+            <div style="background:var(--green-pale); border:1px solid var(--green); border-radius:7px; padding:7px 9px; font-size:0.62rem; font-weight:700; color:var(--green-dark); margin-bottom:7px;">
+              ✓ 1,000/1,000 responses · Sponsor identity now public
+            </div>
+            <div style="background:white; border:1px solid var(--cloud); border-radius:9px; padding:10px; margin-bottom:7px;">
+              <div style="font-size:0.58rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--mist); margin-bottom:1px;">Commissioned by</div>
+              <div style="font-weight:800; font-size:0.85rem; color:var(--ink); margin-bottom:7px;">CNN — National Poll</div>
+              <div style="font-size:0.68rem; font-weight:700; color:var(--ink); line-height:1.4; margin-bottom:8px;">"Do you support raising the federal gas tax for infrastructure?"</div>
+              <div style="margin-bottom:4px;">
+                <div style="display:flex; justify-content:space-between; font-size:0.62rem; font-weight:600; margin-bottom:2px;"><span style="color:var(--green-dark);">Yes</span><span style="color:var(--green-dark);">61%</span></div>
+                <div style="background:var(--cloud); border-radius:100px; height:7px; overflow:hidden;"><div style="background:var(--green); width:61%; height:100%; border-radius:100px;"></div></div>
+              </div>
+              <div style="margin-bottom:4px;">
+                <div style="display:flex; justify-content:space-between; font-size:0.62rem; font-weight:600; margin-bottom:2px;"><span style="color:var(--red);">No</span><span style="color:var(--red);">29%</span></div>
+                <div style="background:var(--cloud); border-radius:100px; height:7px; overflow:hidden;"><div style="background:var(--red); width:29%; height:100%; border-radius:100px;"></div></div>
+              </div>
+              <div>
+                <div style="display:flex; justify-content:space-between; font-size:0.62rem; font-weight:600; margin-bottom:2px;"><span style="color:var(--amber);">Unsure</span><span style="color:var(--amber);">10%</span></div>
+                <div style="background:var(--cloud); border-radius:100px; height:7px; overflow:hidden;"><div style="background:var(--amber); width:10%; height:100%; border-radius:100px;"></div></div>
+              </div>
+              <div style="margin-top:7px; padding-top:7px; border-top:1px solid var(--cloud); font-size:0.56rem; color:var(--mist);">n=1,000 · Women 35–55, VA · Verified Citizens · Closed Apr 8, 2026</div>
+            </div>
+            <div style="display:flex; gap:5px;">
+              <div style="flex:1; background:var(--blue-pale); border-radius:7px; padding:7px; text-align:center; font-size:0.6rem; font-weight:700; color:var(--blue-deep);">Export CSV</div>
+              <div style="flex:1; background:var(--ink); border-radius:7px; padding:7px; text-align:center; font-size:0.6rem; font-weight:700; color:white;">New Poll →</div>
+            </div>
+          </div>
+          <div class="screen-nav">
+            <div class="screen-nav-item"><div class="screen-nav-icon">📊</div>Polls</div>
+            <div class="screen-nav-item active"><div class="screen-nav-icon">📈</div>Results</div>
+            <div class="screen-nav-item"><div class="screen-nav-icon">💳</div>Billing</div>
+            <div class="screen-nav-item"><div class="screen-nav-icon">⚙️</div>Settings</div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -1402,16 +2016,26 @@
 
   <hr class="divider">
 
-  <!-- 14. FINANCIALS -->
+  <!-- 15. FINANCIALS -->
   <section id="financials">
-    <div class="section-label">14 — Unit Economics</div>
-    <h2 class="section-title">A Bid-Based Marketplace<br>with a 50/50 Split</h2>
+    <div class="section-label">15 — Unit Economics</div>
+    <h2 class="section-title">A Bid-Based Marketplace<br>with a Tiered Revenue Split</h2>
     <p class="section-desc">
-      Panel operates as a marketplace with a $5.00 minimum bid per verified response and a flat 50/50 revenue split. Sponsors who need faster results simply bid higher — higher bounties mean higher panelist payouts, higher response rates, and faster fill times. It's not an artificial mechanism; it's just economics.
+      Panel operates as a marketplace with a $5.00 minimum bid per verified response. Standard panelists earn 50% of every bounty. <strong>Power Users</strong> — those who have completed the Civic Academy curriculum — earn 75%, incentivizing education and driving a more knowledgeable, premium respondent pool that commands higher sponsor bids.
     </p>
-    <div class="split-visual">
-      <div class="split-half split-panelist">Panelist — 50%</div>
-      <div class="split-half split-panel">Panel — 50%</div>
+    <div style="margin-bottom:10px;">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:0.62rem; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--mist); margin-bottom:6px;">Standard Panelist</div>
+      <div class="split-visual" style="margin-bottom:0;">
+        <div class="split-half split-panelist">Panelist — 50%</div>
+        <div class="split-half split-panel">Panel — 50%</div>
+      </div>
+    </div>
+    <div style="margin-bottom:24px;">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:0.62rem; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--gold); margin-bottom:6px;">⚡ Power User (Civic Academy Graduate)</div>
+      <div class="split-visual-power">
+        <div class="split-power-user">⚡ Power User — 75%</div>
+        <div class="split-power-panel">Panel — 25%</div>
+      </div>
     </div>
 
     <div class="card" style="display:grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom:24px;">
